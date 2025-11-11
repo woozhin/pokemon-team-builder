@@ -802,6 +802,8 @@
             const [abilitiesData, setAbilitiesData] = useState([]);
             const [searchTerm, setSearchTerm] = useState('');
             const [selectedTypes, setSelectedTypes] = useState([]); // 배열로 변경
+            const [selectedCategory, setSelectedCategory] = useState(null); // 'recommended', 'favorites', null
+            const [favorites, setFavorites] = useState([]); // 즐겨찾기 포켓몬 번호 배열
             const [selectedPokemon, setSelectedPokemon] = useState(null);
             const [currentPage, setCurrentPage] = useState(1);
             const itemsPerPage = 30; // 페이지당 표시할 포켓몬 수
@@ -815,6 +817,26 @@
             useEffect(() => {
                 loadData();
                 loadSavedTeams();
+            }, []);
+            
+            // 도감에서 즐겨찾기 불러오기 (주기적으로 체크)
+            useEffect(() => {
+                const loadFavorites = () => {
+                    const savedFavorites = localStorage.getItem('pokedexFavorites');
+                    if (savedFavorites) {
+                        try {
+                            const parsed = JSON.parse(savedFavorites);
+                            setFavorites(parsed);
+                        } catch (e) {
+                            console.warn('즐겨찾기 불러오기 실패:', e);
+                        }
+                    }
+                };
+                
+                loadFavorites();
+                // 주기적으로 즐겨찾기 업데이트 체크 (5초마다)
+                const interval = setInterval(loadFavorites, 5000);
+                return () => clearInterval(interval);
             }, []);
             
             // 저장된 팀 목록 불러오기
@@ -1062,12 +1084,14 @@
                 }
                 
                 const currentTeam = team.filter(Boolean);
+                const teamNums = currentTeam.map(p => p.num);
+                
                 if (currentTeam.length === 0) {
                     // 팀이 비어있으면 TOP 30 인기 포켓몬
                     if (rankingData && rankingData.length > 0) {
-                        return rankingData.slice(0, 30).map(rank => {
+                        return rankingData.slice(0, 50).map(rank => {
                             return pokemonList.find(p => p.num === rank.id);
-                        }).filter(Boolean);
+                        }).filter(Boolean).slice(0, 30);
                     }
                     return pokemonList.slice(0, 30);
                 }
@@ -1078,17 +1102,24 @@
                 const pokemonData = pokemonDetails[pokemonKey];
                 
                 if (pokemonData && pokemonData['0'] && pokemonData['0'].temoti && pokemonData['0'].temoti.pokemon) {
-                    const partners = pokemonData['0'].temoti.pokemon.slice(0, 30);
+                    const partners = pokemonData['0'].temoti.pokemon.slice(0, 50);
                     const recommended = partners.map(partner => {
                         return pokemonList.find(p => p.num === partner.id);
                     }).filter(Boolean);
                     
                     // 이미 팀에 있는 포켓몬 제외
-                    const teamNums = currentTeam.map(p => p.num);
-                    return recommended.filter(p => !teamNums.includes(p.num));
+                    return recommended.filter(p => !teamNums.includes(p.num)).slice(0, 30);
                 }
                 
                 return [];
+            };
+            
+            // 즐겨찾기 포켓몬 가져오기
+            const getFavoritePokemon = () => {
+                if (favorites.length === 0) return [];
+                return getUniquePokemonByName(
+                    favorites.map(num => pokemonList.find(p => p.num === num)).filter(Boolean)
+                );
             };
 
             // 포켓몬 이름으로 그룹화하고 데이터가 있는 것만 선택
@@ -1175,16 +1206,31 @@
 
             // 추천 포켓몬 (중복 제거)
             const recommendedPokemon = getUniquePokemonByName(getRecommendedPokemon());
+            
+            // 즐겨찾기 포켓몬
+            const favoritePokemon = getFavoritePokemon();
+            
+            // 이미 팀에 있는 포켓몬 번호
+            const teamNums = team.filter(Boolean).map(p => p.num);
 
             // 표시할 포켓몬 결정
             let displayPokemon = [];
             if (searchTerm || selectedTypes.length > 0) {
                 // 검색어가 있거나 타입 필터가 선택된 경우 필터된 포켓몬
                 displayPokemon = filteredPokemon;
+            } else if (selectedCategory === 'recommended') {
+                // 추천 카테고리 선택 시
+                displayPokemon = recommendedPokemon.length > 0 ? recommendedPokemon : popularPokemon;
+            } else if (selectedCategory === 'favorites') {
+                // 즐겨찾기 카테고리 선택 시
+                displayPokemon = favoritePokemon;
             } else {
-                // 기본: 인기 포켓몬
+                // 기본: 인기 포켓몬 (팀이 비어있을 때만)
                 displayPokemon = popularPokemon.length > 0 ? popularPokemon : getUniquePokemonByName(pokemonList).slice(0, 30);
             }
+            
+            // 이미 팀에 있는 포켓몬 제외 (중복 선택 방지)
+            displayPokemon = displayPokemon.filter(p => !teamNums.includes(p.num));
             
             // 최종 중복 제거 (이름 기준) - 추가 안전장치
             const finalDisplayPokemon = getUniquePokemonByName(displayPokemon);
@@ -1195,10 +1241,10 @@
             const endIndex = startIndex + itemsPerPage;
             const paginatedPokemon = finalDisplayPokemon.slice(startIndex, endIndex);
             
-            // 타입 필터 변경 시 페이지를 1로 리셋
+            // 타입 필터 또는 카테고리 변경 시 페이지를 1로 리셋
             useEffect(() => {
                 setCurrentPage(1);
-            }, [selectedTypes, searchTerm]);
+            }, [selectedTypes, searchTerm, selectedCategory]);
 
             if (loading) {
                 return <div className="loading">데이터 로딩 중...</div>;
@@ -1306,8 +1352,57 @@
                                 className="search-input"
                                 placeholder="포켓몬 이름 또는 번호로 검색..."
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) => {
+                                    setSearchTerm(e.target.value);
+                                    setSelectedCategory(null); // 검색 시 카테고리 해제
+                                }}
                             />
+                        </div>
+
+                        {/* 카테고리 버튼 */}
+                        <div style={{marginBottom: '15px', display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
+                            <button
+                                className={`category-btn ${selectedCategory === 'recommended' ? 'active' : ''}`}
+                                onClick={() => {
+                                    setSelectedCategory(selectedCategory === 'recommended' ? null : 'recommended');
+                                    setSearchTerm('');
+                                    setSelectedTypes([]);
+                                }}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '25px',
+                                    border: '2px solid #667eea',
+                                    background: selectedCategory === 'recommended' ? '#667eea' : 'white',
+                                    color: selectedCategory === 'recommended' ? 'white' : '#667eea',
+                                    fontWeight: '700',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    transition: 'all 0.3s'
+                                }}
+                            >
+                                ⭐ 추천
+                            </button>
+                            <button
+                                className={`category-btn ${selectedCategory === 'favorites' ? 'active' : ''}`}
+                                onClick={() => {
+                                    setSelectedCategory(selectedCategory === 'favorites' ? null : 'favorites');
+                                    setSearchTerm('');
+                                    setSelectedTypes([]);
+                                }}
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '25px',
+                                    border: '2px solid #FF6B6B',
+                                    background: selectedCategory === 'favorites' ? '#FF6B6B' : 'white',
+                                    color: selectedCategory === 'favorites' ? 'white' : '#FF6B6B',
+                                    fontWeight: '700',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    transition: 'all 0.3s'
+                                }}
+                            >
+                                ⭐ 즐겨찾기
+                            </button>
                         </div>
 
                         <div className="type-filter">
@@ -1325,6 +1420,8 @@
                                                 // 선택되지 않은 타입이면 추가
                                                 setSelectedTypes([...selectedTypes, type]);
                                             }
+                                            // 타입 필터 선택 시 카테고리 해제
+                                            setSelectedCategory(null);
                                         }}
                                         style={isSelected ? {} : {background: 'white', color: '#333'}}
                                     >
@@ -1335,13 +1432,31 @@
                             })}
                         </div>
 
+                        {selectedCategory === 'recommended' && !searchTerm && selectedTypes.length === 0 && (
+                            <p style={{margin: '15px 0', color: '#666'}}>
+                                {team.filter(Boolean).length === 0 
+                                    ? '💡 현재 시즌 인기 포켓몬 TOP 30을 표시하고 있습니다'
+                                    : `💡 ${team.filter(Boolean).length}번째 포켓몬 추천: ${finalDisplayPokemon.length}마리를 찾았습니다`
+                                }
+                            </p>
+                        )}
+                        
+                        {selectedCategory === 'favorites' && !searchTerm && selectedTypes.length === 0 && (
+                            <p style={{margin: '15px 0', color: '#666'}}>
+                                {favorites.length === 0 
+                                    ? '💡 즐겨찾기한 포켓몬이 없습니다. 도감에서 즐겨찾기를 추가해주세요.'
+                                    : `💡 즐겨찾기한 포켓몬 ${finalDisplayPokemon.length}마리를 표시하고 있습니다`
+                                }
+                            </p>
+                        )}
+                        
                         {selectedTypes.length > 0 && (
                             <p style={{margin: '15px 0', color: '#666'}}>
                                 💡 {selectedTypes.map(t => TYPE_NAMES_KR[t]).join(', ')} 타입 포켓몬 {finalDisplayPokemon.length}마리를 찾았습니다
                             </p>
                         )}
                         
-                        {!searchTerm && selectedTypes.length === 0 && rankingData.length > 0 && (
+                        {!searchTerm && selectedTypes.length === 0 && selectedCategory === null && rankingData.length > 0 && (
                             <p style={{margin: '15px 0', color: '#666'}}>
                                 💡 현재 시즌 인기 포켓몬 TOP 30을 표시하고 있습니다
                             </p>
