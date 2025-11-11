@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타입 상성표 - PocketChoice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Animated background pokeballs */
+        .pokeball-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+        }
+        
+        .pokeball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .pokeball::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #333;
+            transform: translateY(-50%);
+        }
+        
+        .pokeball::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            max-width: 800px;
+            width: 90%;
+            margin: 0 auto 20px;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(42, 117, 187, 0.4));
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .back-btn {
+            background: white;
+            color: #667eea;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-title {
+            color: white;
+            font-size: 48px;
+            font-weight: 900;
+            margin: 30px 0 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+        
+        /* Type Chart Section */
+        .chart-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow-x: auto;
+        }
+        
+        .chart-section h2 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .type-chart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .type-chart-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .type-chart-table th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 11;
+            background: #667eea;
+        }
+        
+        .type-chart-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            min-height: 40px;
+        }
+        
+        .type-chart-table td:first-child {
+            position: sticky;
+            left: 0;
+            background: white;
+            font-weight: 700;
+            z-index: 9;
+        }
+        
+        .type-chart-table tr:hover td {
+            background: #f5f5f5;
+        }
+        
+        .type-chart-table tr:hover td:first-child {
+            background: #f5f5f5;
+        }
+        
+        /* Damage Multiplier Colors and Symbols */
+        .dmg-0 {
+            background: white !important;
+            position: relative;
+        }
+        
+        .dmg-0::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            width: 18px;
+            height: 3px;
+            background: #1a237e;
+        }
+        
+        .dmg-0::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            width: 18px;
+            height: 3px;
+            background: #1a237e;
+        }
+        
+        .dmg-05 {
+            background: white !important;
+            position: relative;
+        }
+        
+        .dmg-05::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 18px solid #f9a825;
+        }
+        
+        .dmg-1 {
+            background: white;
+        }
+        
+        .dmg-2 {
+            background: white !important;
+            position: relative;
+        }
+        
+        .dmg-2::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #c62828;
+            border-radius: 50%;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .legend-text {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .info-box h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-box li {
+            padding: 5px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .info-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .chart-section {
+                padding: 20px;
+            }
+            
+            .type-chart-table {
+                font-size: 11px;
+            }
+            
+            .type-chart-table th,
+            .type-chart-table td {
+                padding: 6px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background pokeballs -->
+    <div class="pokeball-bg">
+        <div class="pokeball" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="pokeball" style="left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="pokeball" style="left: 50%; top: 60%; animation-delay: 4s;"></div>
+        <div class="pokeball" style="left: 20%; top: 70%; animation-delay: 6s;"></div>
+        <div class="pokeball" style="left: 90%; top: 80%; animation-delay: 8s;"></div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <img src="mainbanner.png" alt="PocketChoice" class="logo" />
+            <a href="guide.html" class="back-btn">← 가이드 목록으로</a>
+            <h1 class="page-title">🔥 타입 상성표</h1>
+            <p class="page-subtitle">18가지 타입의 상성 관계를 한눈에 확인하세요</p>
+        </div>
+        
+        <div class="chart-section">
+            <div class="info-box">
+                <h3>📖 상성표 읽는 방법</h3>
+                <ul>
+                    <li><strong>⊙ 매우 좋은 효과 × 2:</strong> 「효과가 굉장했다!」 - 2배의 피해를 줍니다</li>
+                    <li><strong>기호 없음 보통의 효과 × 1:</strong> 일반적인 피해를 줍니다</li>
+                    <li><strong>△ 별로인 효과 × 0.5:</strong> 「효과가 별로인 듯하다」 - 0.5배의 피해를 줍니다</li>
+                    <li><strong>X 효과가 전혀 없다 × 0:</strong> 「효과가 없는 것 같다...」 - 피해를 주지 못합니다</li>
+                </ul>
+                <p style="margin-top: 15px; font-size: 14px;">
+                    <strong>예시:</strong> 왼쪽 열은 공격하는 포켓몬의 기술타입, 위쪽 행은 공격받는 포켓몬의 타입입니다. 
+                    예를 들어, 불꽃 타입 기술이 풀 타입 포켓몬을 공격하면 ⊙ (매우 좋은 효과, 2배)의 피해를 줍니다.
+                </p>
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color dmg-2" style="position: relative; width: 30px; height: 30px;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; background: #c62828; border-radius: 50%;"></div>
+                    </div>
+                    <span class="legend-text">매우 좋은 효과 × 2</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color dmg-1" style="width: 30px; height: 30px; border: 1px solid #ddd;"></div>
+                    <span class="legend-text">보통의 효과</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color dmg-05" style="position: relative; width: 30px; height: 30px;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 18px solid #f9a825;"></div>
+                    </div>
+                    <span class="legend-text">별로인 효과 × 0.5</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color dmg-0" style="position: relative; width: 30px; height: 30px;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); width: 18px; height: 3px; background: #1a237e;"></div>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); width: 18px; height: 3px; background: #1a237e;"></div>
+                    </div>
+                    <span class="legend-text">효과가 전혀 없다 × 0</span>
+                </div>
+            </div>
+            
+            <table class="type-chart-table" id="typeChartTable">
+                <thead>
+                    <tr>
+                        <th>공격하는 포켓몬의 기술타입\공격받는 포켓몬의 타입</th>
+                        <th>노말</th>
+                        <th>불꽃</th>
+                        <th>물</th>
+                        <th>전기</th>
+                        <th>풀</th>
+                        <th>얼음</th>
+                        <th>격투</th>
+                        <th>독</th>
+                        <th>땅</th>
+                        <th>비행</th>
+                        <th>에스퍼</th>
+                        <th>벌레</th>
+                        <th>바위</th>
+                        <th>고스트</th>
+                        <th>드래곤</th>
+                        <th>악</th>
+                        <th>강철</th>
+                        <th>페어리</th>
+                    </tr>
+                </thead>
+                <tbody id="typeChartBody">
+                    <!-- JavaScript로 동적 생성 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        // 타입 상성 데이터
+        const typeChartData = {
+            "normal": { "nameko": "노말", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 1, "Electric": 1, "Grass": 1, "Ice": 1, "Fighting": 2, "Poison": 1, "Ground": 1, "Flying": 1, "Psychic": 1, "Bug": 1, "Rock": 1, "Ghost": 0, "Dragon": 1, "Dark": 1, "Steel": 1, "Fairy": 1 } },
+            "fire": { "nameko": "불꽃", "damagetaken": { "Normal": 1, "Fire": 0.5, "Water": 2, "Electric": 1, "Grass": 0.5, "Ice": 0.5, "Fighting": 1, "Poison": 1, "Ground": 2, "Flying": 1, "Psychic": 1, "Bug": 0.5, "Rock": 2, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 0.5, "Fairy": 0.5 } },
+            "water": { "nameko": "물", "damagetaken": { "Normal": 1, "Fire": 0.5, "Water": 0.5, "Electric": 2, "Grass": 2, "Ice": 0.5, "Fighting": 1, "Poison": 1, "Ground": 1, "Flying": 1, "Psychic": 1, "Bug": 1, "Rock": 1, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 0.5, "Fairy": 1 } },
+            "electric": { "nameko": "전기", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 1, "Electric": 0.5, "Grass": 1, "Ice": 1, "Fighting": 1, "Poison": 1, "Ground": 2, "Flying": 0.5, "Psychic": 1, "Bug": 1, "Rock": 1, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 0.5, "Fairy": 1 } },
+            "grass": { "nameko": "풀", "damagetaken": { "Normal": 1, "Fire": 2, "Water": 0.5, "Electric": 0.5, "Grass": 0.5, "Ice": 2, "Fighting": 1, "Poison": 2, "Ground": 0.5, "Flying": 2, "Psychic": 1, "Bug": 2, "Rock": 1, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 1, "Fairy": 1 } },
+            "ice": { "nameko": "얼음", "damagetaken": { "Normal": 1, "Fire": 2, "Water": 1, "Electric": 1, "Grass": 1, "Ice": 0.5, "Fighting": 2, "Poison": 1, "Ground": 1, "Flying": 1, "Psychic": 1, "Bug": 1, "Rock": 2, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 2, "Fairy": 1 } },
+            "fighting": { "nameko": "격투", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 1, "Electric": 1, "Grass": 1, "Ice": 1, "Fighting": 1, "Poison": 1, "Ground": 1, "Flying": 2, "Psychic": 2, "Bug": 0.5, "Rock": 0.5, "Ghost": 1, "Dragon": 1, "Dark": 0.5, "Steel": 1, "Fairy": 2 } },
+            "poison": { "nameko": "독", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 1, "Electric": 1, "Grass": 0.5, "Ice": 1, "Fighting": 0.5, "Poison": 0.5, "Ground": 2, "Flying": 1, "Psychic": 2, "Bug": 0.5, "Rock": 1, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 1, "Fairy": 0.5 } },
+            "ground": { "nameko": "땅", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 2, "Electric": 0, "Grass": 2, "Ice": 2, "Fighting": 1, "Poison": 0.5, "Ground": 1, "Flying": 1, "Psychic": 1, "Bug": 1, "Rock": 0.5, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 1, "Fairy": 1 } },
+            "flying": { "nameko": "비행", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 1, "Electric": 2, "Grass": 0.5, "Ice": 2, "Fighting": 0.5, "Poison": 1, "Ground": 0, "Flying": 1, "Psychic": 1, "Bug": 0.5, "Rock": 2, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 1, "Fairy": 1 } },
+            "psychic": { "nameko": "에스퍼", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 1, "Electric": 1, "Grass": 1, "Ice": 1, "Fighting": 0.5, "Poison": 1, "Ground": 1, "Flying": 1, "Psychic": 0.5, "Bug": 2, "Rock": 1, "Ghost": 2, "Dragon": 1, "Dark": 2, "Steel": 1, "Fairy": 1 } },
+            "bug": { "nameko": "벌레", "damagetaken": { "Normal": 1, "Fire": 2, "Water": 1, "Electric": 1, "Grass": 0.5, "Ice": 1, "Fighting": 0.5, "Poison": 1, "Ground": 0.5, "Flying": 2, "Psychic": 1, "Bug": 1, "Rock": 2, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 1, "Fairy": 1 } },
+            "rock": { "nameko": "바위", "damagetaken": { "Normal": 0.5, "Fire": 0.5, "Water": 2, "Electric": 1, "Grass": 2, "Ice": 1, "Fighting": 2, "Poison": 0.5, "Ground": 2, "Flying": 0.5, "Psychic": 1, "Bug": 1, "Rock": 1, "Ghost": 1, "Dragon": 1, "Dark": 1, "Steel": 2, "Fairy": 1 } },
+            "ghost": { "nameko": "고스트", "damagetaken": { "Normal": 0, "Fire": 1, "Water": 1, "Electric": 1, "Grass": 1, "Ice": 1, "Fighting": 0, "Poison": 0.5, "Ground": 1, "Flying": 1, "Psychic": 1, "Bug": 0.5, "Rock": 1, "Ghost": 2, "Dragon": 1, "Dark": 2, "Steel": 1, "Fairy": 1 } },
+            "dragon": { "nameko": "드래곤", "damagetaken": { "Normal": 1, "Fire": 0.5, "Water": 0.5, "Electric": 0.5, "Grass": 0.5, "Ice": 2, "Fighting": 1, "Poison": 1, "Ground": 1, "Flying": 1, "Psychic": 1, "Bug": 1, "Rock": 1, "Ghost": 1, "Dragon": 2, "Dark": 1, "Steel": 1, "Fairy": 2 } },
+            "dark": { "nameko": "악", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 1, "Electric": 1, "Grass": 1, "Ice": 1, "Fighting": 2, "Poison": 1, "Ground": 1, "Flying": 1, "Psychic": 0, "Bug": 2, "Rock": 1, "Ghost": 0.5, "Dragon": 1, "Dark": 0.5, "Steel": 1, "Fairy": 2 } },
+            "steel": { "nameko": "강철", "damagetaken": { "Normal": 0.5, "Fire": 2, "Water": 1, "Electric": 1, "Grass": 0.5, "Ice": 0.5, "Fighting": 2, "Poison": 0, "Ground": 2, "Flying": 0.5, "Psychic": 0.5, "Bug": 0.5, "Rock": 0.5, "Ghost": 1, "Dragon": 0.5, "Dark": 1, "Steel": 0.5, "Fairy": 0.5 } },
+            "fairy": { "nameko": "페어리", "damagetaken": { "Normal": 1, "Fire": 1, "Water": 1, "Electric": 1, "Grass": 1, "Ice": 1, "Fighting": 0.5, "Poison": 2, "Ground": 1, "Flying": 1, "Psychic": 1, "Bug": 0.5, "Rock": 1, "Ghost": 1, "Dragon": 0, "Dark": 0.5, "Steel": 2, "Fairy": 1 } }
+        };
+        
+        const attackTypes = ["Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"];
+        const defenseTypes = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy"];
+        
+        function getDamageClass(multiplier) {
+            if (multiplier === 0) return "dmg-0";
+            if (multiplier === 0.5) return "dmg-05";
+            if (multiplier === 1) return "dmg-1";
+            if (multiplier === 2) return "dmg-2";
+            return "dmg-1";
+        }
+        
+        function getDamageText(multiplier) {
+            // 기호는 CSS로 표시하므로 빈 문자열 반환
+            if (multiplier === 0) return "";
+            if (multiplier === 0.5) return "";
+            if (multiplier === 1) return "";
+            if (multiplier === 2) return "";
+            return "";
+        }
+        
+        const tbody = document.getElementById('typeChartBody');
+        
+        // 공격 타입을 행으로, 방어 타입을 열로
+        attackTypes.forEach((attackType, attackIndex) => {
+            const row = document.createElement('tr');
+            
+            // 공격 타입 이름 (왼쪽 열)
+            const nameCell = document.createElement('td');
+            const attackTypeKey = defenseTypes[attackIndex];
+            nameCell.textContent = typeChartData[attackTypeKey].nameko;
+            nameCell.style.fontWeight = '700';
+            row.appendChild(nameCell);
+            
+            // 각 방어 타입에 대한 상성
+            defenseTypes.forEach(defType => {
+                const cell = document.createElement('td');
+                const typeData = typeChartData[defType];
+                const multiplier = typeData.damagetaken[attackType] !== undefined ? typeData.damagetaken[attackType] : 1;
+                cell.textContent = getDamageText(multiplier);
+                cell.className = getDamageClass(multiplier);
+                row.appendChild(cell);
+            });
+            
+            tbody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
+

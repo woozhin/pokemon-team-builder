@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포켓몬 배틀 가이드 - PocketChoice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Animated background pokeballs */
+        .pokeball-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+        }
+        
+        .pokeball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .pokeball::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #333;
+            transform: translateY(-50%);
+        }
+        
+        .pokeball::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            max-width: 800px;
+            width: 90%;
+            margin: 0 auto 20px;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(42, 117, 187, 0.4));
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .back-btn {
+            background: white;
+            color: #667eea;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-title {
+            color: white;
+            font-size: 48px;
+            font-weight: 900;
+            margin: 30px 0 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+        
+        /* Guide Menu */
+        .guide-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .guide-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .guide-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .guide-card-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .guide-card h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .guide-card p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .guide-menu {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .guide-card {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background pokeballs -->
+    <div class="pokeball-bg">
+        <div class="pokeball" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="pokeball" style="left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="pokeball" style="left: 50%; top: 60%; animation-delay: 4s;"></div>
+        <div class="pokeball" style="left: 20%; top: 70%; animation-delay: 6s;"></div>
+        <div class="pokeball" style="left: 90%; top: 80%; animation-delay: 8s;"></div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <img src="mainbanner.png" alt="PocketChoice" class="logo" />
+            <a href="pocketchoice-homepage.html" class="back-btn">← 홈으로 돌아가기</a>
+            <h1 class="page-title">📚 포켓몬 배틀 가이드</h1>
+            <p class="page-subtitle">초보자를 위한 포켓몬 배틀 완벽 가이드</p>
+        </div>
+        
+        <div class="guide-menu">
+            <a href="guide-stats.html" class="guide-card">
+                <div class="guide-card-icon">📊</div>
+                <h2>능력치 가이드</h2>
+                <p>종족값, 개체값, 노력치, 성격에 대한<br>상세한 설명과 활용법을 알아보세요</p>
+            </a>
+            
+            <a href="guide-items.html" class="guide-card">
+                <div class="guide-card-icon">🎒</div>
+                <h2>지닌 도구 가이드</h2>
+                <p>다양한 지닌 도구의 종류와 효과,<br>전략적 활용법을 배워보세요</p>
+            </a>
+            
+            <a href="guide-typechart.html" class="guide-card">
+                <div class="guide-card-icon">🔥</div>
+                <h2>타입 상성표</h2>
+                <p>18가지 타입의 상성 관계를<br>한눈에 확인하고 전략을 세우세요</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -27,6 +27,32 @@
 
 ---
 
+## 🛠️ 기술 스택 및 API
+
+### 기술 스택
+- **React 18** (CDN) - `team-builder.html`에서 동적 UI 구성 및 상태 관리
+- **Babel Standalone** (CDN) - JSX 문법 변환
+- **HTML5 / CSS3 / JavaScript (ES6+)** - 모든 페이지의 기본 구조 및 스타일링
+- **CSS Grid & Flexbox** - 반응형 레이아웃 구성
+- **JSX** - React 컴포넌트 작성 (`team-builder.html`)
+
+### 사용 API
+- **PokeAPI** - 포켓몬 및 아이템 이미지 제공 (모든 페이지)
+- **Google Fonts** - 한글 폰트 (Noto Sans KR) 제공 (모든 페이지)
+- **Fetch API** - 로컬 JSON 파일 비동기 로드 (`team-builder.html`, `team-recommendations.html`)
+- **LocalStorage API** - 팀 저장/불러오기 및 페이지 간 데이터 전달 (`team-builder.html`, `team-recommendations.html`)
+
+### 데이터 파일 (`data/` 폴더)
+- `pokemoem_pokedex.json` - 포켓몬 기본 정보
+- `pokemoem_pokemon_ranking_sc.json` - 포켓몬 인기 랭킹
+- `pokemoem_typechart.json` - 타입 상성표
+- `pokemoem_pokemon_details_sc.json` - 포켓몬 상세 정보 (추천 기술/아이템)
+- `pokemoem_moves.json` - 기술 정보
+- `pokemoem_items.json` - 지닌 도구 정보
+- `pokemoem_abilities.json` - 특성 정보
+
+---
+
 ## 📄 라이선스
 이 프로젝트는 MIT 라이선스로 배포될 예정입니다.  
 자유롭게 수정, 배포 가능하되 출처 명시를 권장합니다.

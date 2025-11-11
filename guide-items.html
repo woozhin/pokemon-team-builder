@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지닌 도구 가이드 - PocketChoice</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Animated background pokeballs */
+        .pokeball-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+        }
+        
+        .pokeball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .pokeball::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #333;
+            transform: translateY(-50%);
+        }
+        
+        .pokeball::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            max-width: 800px;
+            width: 90%;
+            margin: 0 auto 20px;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(42, 117, 187, 0.4));
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .back-btn {
+            background: white;
+            color: #667eea;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-title {
+            color: white;
+            font-size: 48px;
+            font-weight: 900;
+            margin: 30px 0 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+        
+        /* Item Categories */
+        .category-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .category-section h2 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .item-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .item-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .item-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        
+        .item-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .item-desc {
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .item-usage {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .item-usage h4 {
+            font-size: 16px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .item-usage p {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .category-section {
+                padding: 25px;
+            }
+            
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background pokeballs -->
+    <div class="pokeball-bg">
+        <div class="pokeball" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="pokeball" style="left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="pokeball" style="left: 50%; top: 60%; animation-delay: 4s;"></div>
+        <div class="pokeball" style="left: 20%; top: 70%; animation-delay: 6s;"></div>
+        <div class="pokeball" style="left: 90%; top: 80%; animation-delay: 8s;"></div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <img src="mainbanner.png" alt="PocketChoice" class="logo" />
+            <a href="guide.html" class="back-btn">← 가이드 목록으로</a>
+            <h1 class="page-title">🎒 지닌 도구 가이드</h1>
+            <p class="page-subtitle">다양한 지닌 도구의 종류와 효과를 알아보세요</p>
+        </div>
+        
+        <!-- 회복/지속형 도구 -->
+        <div class="category-section">
+            <h2>💚 회복/지속형 도구</h2>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/leftovers.png" 
+                             alt="먹다 남은 음식" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">먹다 남은 음식</div>
+                    </div>
+                    <div class="item-desc">
+                        매 턴 종료 시 최대 HP의 1/16을 회복합니다. 지속적인 회복이 필요한 포켓몬에게 매우 유용합니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>방어형 포켓몬이나 지속전형 포켓몬에게 주로 사용됩니다. 긴 배틀에서 체력 유지에 도움이 됩니다.</p>
+                    </div>
+                </div>
+                
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/black-sludge.png" 
+                             alt="검은진흙" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">검은진흙</div>
+                    </div>
+                    <div class="item-desc">
+                        독 타입 포켓몬이 지니면 매 턴 최대 HP의 1/16을 회복하고, 다른 타입이 지니면 매 턴 피해를 받습니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>독 타입 포켓몬 전용 회복 도구입니다. 먹다 남은 음식과 비슷하지만 독 타입에만 효과가 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 공격 강화 도구 -->
+        <div class="category-section">
+            <h2>⚔️ 공격 강화 도구</h2>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/life-orb.png" 
+                             alt="생명의 구슬" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">생명의 구슬</div>
+                    </div>
+                    <div class="item-desc">
+                        기술의 위력이 1.3배가 되지만, 기술을 사용할 때마다 최대 HP의 1/10을 잃습니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>공격형 포켓몬의 화력을 극대화하는 도구입니다. 빠르게 상대를 쓰러뜨리는 전략에 적합합니다.</p>
+                    </div>
+                </div>
+                
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/choice-band.png" 
+                             alt="구애머리띠" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">구애머리띠</div>
+                    </div>
+                    <div class="item-desc">
+                        공격이 1.5배가 되지만, 배틀에 나온 후 처음 사용한 기술만 사용할 수 있습니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>물리 공격형 포켓몬에게 사용됩니다. 강력한 위력의 기술 하나로 상대를 압도하는 전략에 적합합니다.</p>
+                    </div>
+                </div>
+                
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/choice-specs.png" 
+                             alt="구애안경" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">구애안경</div>
+                    </div>
+                    <div class="item-desc">
+                        특수공격이 1.5배가 되지만, 배틀에 나온 후 처음 사용한 기술만 사용할 수 있습니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>특수 공격형 포켓몬에게 사용됩니다. 구애머리띠의 특수공격 버전입니다.</p>
+                    </div>
+                </div>
+                
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/choice-scarf.png" 
+                             alt="구애스카프" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">구애스카프</div>
+                    </div>
+                    <div class="item-desc">
+                        스피드가 1.5배가 되지만, 배틀에 나온 후 처음 사용한 기술만 사용할 수 있습니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>스피드가 부족한 포켓몬에게 사용됩니다. 상대보다 먼저 공격할 수 있게 해줍니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 방어/생존 도구 -->
+        <div class="category-section">
+            <h2>🛡️ 방어/생존 도구</h2>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/focus-sash.png" 
+                             alt="기합의 띠" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">기합의 띠</div>
+                    </div>
+                    <div class="item-desc">
+                        풀피 상태에서 일격에 쓰러질 공격을 받으면 HP가 1만 남고 살아남습니다. 한 번만 효과가 있습니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>약한 포켓몬이나 한 방을 버티고 반격해야 하는 포켓몬에게 사용됩니다. 풀피 상태에서만 효과가 있습니다.</p>
+                    </div>
+                </div>
+                
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/rocky-helmet.png" 
+                             alt="돌머리띠" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">돌머리띠</div>
+                    </div>
+                    <div class="item-desc">
+                        접촉 기술을 받으면 공격한 포켓몬에게 최대 HP의 1/6 피해를 줍니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>방어형 포켓몬에게 사용됩니다. 접촉 기술을 사용하는 상대에게 반격 피해를 줍니다.</p>
+                    </div>
+                </div>
+                
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/assault-vest.png" 
+                             alt="돌격조끼" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">돌격조끼</div>
+                    </div>
+                    <div class="item-desc">
+                        특수방어가 1.5배가 되지만, 변화 기술을 사용할 수 없게 됩니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>특수 공격에 약한 포켓몬에게 사용됩니다. 특수방어를 크게 올려주지만 변화 기술 사용이 불가능합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 기타 유용한 도구 -->
+        <div class="category-section">
+            <h2>✨ 기타 유용한 도구</h2>
+            <div class="items-grid">
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/air-balloon.png" 
+                             alt="풍선" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">풍선</div>
+                    </div>
+                    <div class="item-desc">
+                        땅 타입 기술에 맞지 않게 됩니다. 공격 기술을 받으면 풍선이 터져 효과가 사라집니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>땅 타입에 약한 포켓몬에게 사용됩니다. 땅 타입 공격을 한 번 막아줍니다.</p>
+                    </div>
+                </div>
+                
+                <div class="item-card">
+                    <div class="item-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/sitrus-berry.png" 
+                             alt="자뭉열매" class="item-image"
+                             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'">
+                        <div class="item-name">자뭉열매</div>
+                    </div>
+                    <div class="item-desc">
+                        HP가 절반 이하로 떨어지면 자동으로 사용되어 HP를 최대 HP의 1/4만큼 회복합니다.
+                    </div>
+                    <div class="item-usage">
+                        <h4>💡 활용법</h4>
+                        <p>생존력을 높이고 싶은 포켓몬에게 사용됩니다. 한 번만 효과가 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

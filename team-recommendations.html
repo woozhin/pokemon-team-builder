@@ -18,11 +18,64 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            position: relative;
+        }
+        
+        /* Animated background pokeballs */
+        .pokeball-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+        }
+        
+        .pokeball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .pokeball::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #333;
+            transform: translateY(-50%);
+        }
+        
+        .pokeball::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         /* Header */
@@ -32,10 +85,17 @@
         }
         
         .logo {
-            max-width: 400px;
+            max-width: 800px;
             width: 90%;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            margin: 0 auto 20px;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(42, 117, 187, 0.4));
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
         
         .back-btn {
@@ -355,6 +415,15 @@
     </style>
 </head>
 <body>
+    <!-- Animated background pokeballs -->
+    <div class="pokeball-bg">
+        <div class="pokeball" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="pokeball" style="left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="pokeball" style="left: 50%; top: 60%; animation-delay: 4s;"></div>
+        <div class="pokeball" style="left: 20%; top: 70%; animation-delay: 6s;"></div>
+        <div class="pokeball" style="left: 90%; top: 80%; animation-delay: 8s;"></div>
+    </div>
+    
     <div class="container">
         <div class="header">
             <img src="mainbanner.png" alt="PocketChoice" class="logo" />

@@ -21,11 +21,64 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            position: relative;
+        }
+        
+        /* Animated background pokeballs */
+        .pokeball-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+        }
+        
+        .pokeball {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .pokeball::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #333;
+            transform: translateY(-50%);
+        }
+        
+        .pokeball::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         /* Header */
@@ -35,10 +88,17 @@
         }
         
         .logo {
-            max-width: 400px;
+            max-width: 800px;
             width: 90%;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            margin: 0 auto 20px;
+            display: block;
+            filter: drop-shadow(0 10px 30px rgba(42, 117, 187, 0.4));
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
         
         .back-btn {
@@ -143,6 +203,54 @@
             padding: 3px;
         }
         
+        .team-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .team-action-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .save-team-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+        
+        .save-team-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(78, 205, 196, 0.5);
+        }
+        
+        .save-team-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .load-team-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .load-team-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
+        }
+        
         .team-analysis {
             background: #f8f9fa;
             padding: 20px;
@@ -159,6 +267,134 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+        }
+        
+        /* Save/Load Modal */
+        .save-modal-content {
+            max-width: 500px;
+        }
+        
+        .save-modal-content input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        
+        .save-modal-content input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .save-modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .save-modal-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .save-modal-btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .save-modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .save-modal-btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .save-modal-btn-secondary:hover {
+            background: #d0d0d0;
+        }
+        
+        .saved-teams-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .saved-team-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .saved-team-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .saved-team-info {
+            flex: 1;
+        }
+        
+        .saved-team-name {
+            font-weight: 700;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .saved-team-date {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .saved-team-pokemon {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        
+        .saved-team-pokemon img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        
+        .saved-team-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .delete-team-btn {
+            background: #ff5252;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .delete-team-btn:hover {
+            background: #ff1744;
+            transform: scale(1.05);
         }
         
         .type-badge {
@@ -383,6 +619,59 @@
             font-weight: 700;
         }
         
+        /* Hexagon Stat Chart */
+        .hexagon-chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+        }
+        
+        .hexagon-chart {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            margin: 0 auto;
+        }
+        
+        .hexagon-chart svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .hexagon-grid {
+            fill: none;
+            stroke: #e0e0e0;
+            stroke-width: 1;
+        }
+        
+        .hexagon-fill {
+            fill: rgba(102, 126, 234, 0.3);
+            stroke: #667eea;
+            stroke-width: 2;
+            transition: all 0.3s;
+        }
+        
+        .hexagon-point {
+            fill: #667eea;
+            r: 4;
+        }
+        
+        .hexagon-label {
+            font-size: 12px;
+            font-weight: 700;
+            fill: #333;
+            text-anchor: middle;
+        }
+        
+        .hexagon-value {
+            font-size: 11px;
+            fill: #667eea;
+            font-weight: 700;
+            text-anchor: middle;
+        }
+        
         .moves-section, .items-section {
             margin: 20px 0;
             text-align: left;
@@ -468,6 +757,15 @@
     </style>
 </head>
 <body>
+    <!-- Animated background pokeballs -->
+    <div class="pokeball-bg">
+        <div class="pokeball" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="pokeball" style="left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="pokeball" style="left: 50%; top: 60%; animation-delay: 4s;"></div>
+        <div class="pokeball" style="left: 20%; top: 70%; animation-delay: 6s;"></div>
+        <div class="pokeball" style="left: 90%; top: 80%; animation-delay: 8s;"></div>
+    </div>
+    
     <div id="root"></div>
 
     <script type="text/babel">
@@ -501,15 +799,87 @@
             const [pokemonDetails, setPokemonDetails] = useState(null);
             const [movesData, setMovesData] = useState([]);
             const [itemsData, setItemsData] = useState([]);
+            const [abilitiesData, setAbilitiesData] = useState([]);
             const [searchTerm, setSearchTerm] = useState('');
-            const [selectedType, setSelectedType] = useState(null);
+            const [selectedTypes, setSelectedTypes] = useState([]); // 배열로 변경
             const [selectedPokemon, setSelectedPokemon] = useState(null);
+            const [currentPage, setCurrentPage] = useState(1);
+            const itemsPerPage = 30; // 페이지당 표시할 포켓몬 수
+            const [savedTeams, setSavedTeams] = useState([]);
+            const [showSaveModal, setShowSaveModal] = useState(false);
+            const [showLoadModal, setShowLoadModal] = useState(false);
+            const [teamName, setTeamName] = useState('');
             const [loading, setLoading] = useState(true);
             const [error, setError] = useState(null);
 
             useEffect(() => {
                 loadData();
+                loadSavedTeams();
             }, []);
+            
+            // 저장된 팀 목록 불러오기
+            const loadSavedTeams = () => {
+                try {
+                    const saved = localStorage.getItem('savedTeams');
+                    if (saved) {
+                        setSavedTeams(JSON.parse(saved));
+                    }
+                } catch (e) {
+                    console.warn('저장된 팀 불러오기 실패:', e);
+                }
+            };
+            
+            // 팀 저장
+            const saveTeam = () => {
+                if (team.filter(Boolean).length === 0) {
+                    alert('팀에 포켓몬이 없습니다!');
+                    return;
+                }
+                if (!teamName.trim()) {
+                    alert('팀 이름을 입력해주세요!');
+                    return;
+                }
+                
+                const newTeam = {
+                    id: Date.now(),
+                    name: teamName.trim(),
+                    team: team.filter(Boolean),
+                    date: new Date().toLocaleString('ko-KR')
+                };
+                
+                const updatedTeams = [...savedTeams, newTeam];
+                setSavedTeams(updatedTeams);
+                localStorage.setItem('savedTeams', JSON.stringify(updatedTeams));
+                setShowSaveModal(false);
+                setTeamName('');
+                alert('팀이 저장되었습니다!');
+            };
+            
+            // 저장된 팀 불러오기
+            const loadTeam = (savedTeam) => {
+                const loadedTeam = [...team];
+                savedTeam.team.forEach((pokemon, index) => {
+                    if (index < 6) {
+                        loadedTeam[index] = pokemon;
+                    }
+                });
+                // 나머지 슬롯은 null로
+                for (let i = savedTeam.team.length; i < 6; i++) {
+                    loadedTeam[i] = null;
+                }
+                setTeam(loadedTeam);
+                setShowLoadModal(false);
+            };
+            
+            // 저장된 팀 삭제
+            const deleteTeam = (teamId, e) => {
+                e.stopPropagation();
+                if (confirm('정말 이 팀을 삭제하시겠습니까?')) {
+                    const updatedTeams = savedTeams.filter(t => t.id !== teamId);
+                    setSavedTeams(updatedTeams);
+                    localStorage.setItem('savedTeams', JSON.stringify(updatedTeams));
+                }
+            };
 
             // 포켓몬 데이터가 로드된 후 추천 팀 적용
             useEffect(() => {
@@ -621,6 +991,18 @@
                         setItemsData([]);
                     }
 
+                    // Load Abilities
+                    try {
+                        const abilitiesRes = await fetch('data/pokemoem_abilities.json');
+                        if (!abilitiesRes.ok) throw new Error('특성 파일을 찾을 수 없습니다');
+                        const abilitiesJson = await abilitiesRes.json();
+                        setAbilitiesData(abilitiesJson);
+                        console.log('특성 데이터 로딩 완료:', abilitiesJson.length, '개');
+                    } catch (e) {
+                        console.warn('특성 데이터 로딩 실패, 계속 진행합니다:', e);
+                        setAbilitiesData([]);
+                    }
+
                     setLoading(false);
                 } catch (error) {
                     console.error('데이터 로딩 실패:', error);
@@ -636,6 +1018,7 @@
                     newTeam[emptyIndex] = pokemon;
                     setTeam(newTeam);
                     setSelectedPokemon(null);
+                    setSearchTerm(''); // 검색어 초기화
                 } else {
                     alert('팀이 가득 찼습니다!');
                 }
@@ -647,36 +1030,175 @@
                 setTeam(newTeam);
             };
 
-            const getPokemonImageUrl = (num, form = 0) => {
-                // Form이 0이 아니면 특별한 폼
-                if (form && form > 0) {
+            const getPokemonImageUrl = (pokemon) => {
+                if (!pokemon) return '';
+                
+                const num = pokemon.num;
+                const forme = pokemon.forme || 0;
+                const name = (pokemon.nameko || pokemon.name || '').toLowerCase();
+                
+                // 리자몽 X, Y 구분
+                if (num === 6) {
+                    if (name.includes('mega-x') || name.includes('메가x') || forme === 1) {
+                        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10033.png`;
+                    } else if (name.includes('mega-y') || name.includes('메가y') || forme === 2) {
+                        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10034.png`;
+                    }
+                }
+                
+                // Form이 있으면 특별한 이미지 URL 사용
+                if (forme && forme > 0) {
+                    // 특정 forme에 대한 이미지 URL 생성
                     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${num}.png`;
                 }
+                
                 return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${num}.png`;
             };
 
-            const filteredPokemon = pokemonList.filter(pokemon => {
+            // 추천 포켓몬 계산
+            const getRecommendedPokemon = () => {
+                if (!pokemonDetails || pokemonList.length === 0) {
+                    return [];
+                }
+                
+                const currentTeam = team.filter(Boolean);
+                if (currentTeam.length === 0) {
+                    // 팀이 비어있으면 TOP 30 인기 포켓몬
+                    if (rankingData && rankingData.length > 0) {
+                        return rankingData.slice(0, 30).map(rank => {
+                            return pokemonList.find(p => p.num === rank.id);
+                        }).filter(Boolean);
+                    }
+                    return pokemonList.slice(0, 30);
+                }
+                
+                // 마지막으로 추가된 포켓몬 기준으로 추천
+                const lastPokemon = currentTeam[currentTeam.length - 1];
+                const pokemonKey = lastPokemon.num?.toString();
+                const pokemonData = pokemonDetails[pokemonKey];
+                
+                if (pokemonData && pokemonData['0'] && pokemonData['0'].temoti && pokemonData['0'].temoti.pokemon) {
+                    const partners = pokemonData['0'].temoti.pokemon.slice(0, 30);
+                    const recommended = partners.map(partner => {
+                        return pokemonList.find(p => p.num === partner.id);
+                    }).filter(Boolean);
+                    
+                    // 이미 팀에 있는 포켓몬 제외
+                    const teamNums = currentTeam.map(p => p.num);
+                    return recommended.filter(p => !teamNums.includes(p.num));
+                }
+                
+                return [];
+            };
+
+            // 포켓몬 이름으로 그룹화하고 데이터가 있는 것만 선택
+            const getUniquePokemonByName = (pokemonList) => {
+                if (!pokemonList || pokemonList.length === 0) return [];
+                
+                const nameMap = new Map();
+                
+                pokemonList.forEach(pokemon => {
+                    if (!pokemon) return;
+                    
+                    // 데이터가 없는 포켓몬은 제외 (abilities나 basestats가 있어야 함)
+                    const hasData = pokemon.abilities || pokemon.basestats;
+                    if (!hasData) return;
+                    
+                    // 이름에서 특수 형태 표시 제거 (예: "피카츄 - 코스프레" -> "피카츄")
+                    let name = pokemon.nameko || pokemon.name;
+                    if (!name) return;
+                    
+                    // "-" 이후의 텍스트 제거 (특수 형태 제거)
+                    const baseName = name.split(' - ')[0].split('-')[0].trim();
+                    const key = baseName.toLowerCase();
+                    
+                    // 이미 같은 이름이 있으면, 데이터가 더 많은 것을 선택
+                    if (!nameMap.has(key)) {
+                        nameMap.set(key, pokemon);
+                    } else {
+                        const existing = nameMap.get(key);
+                        const existingHasData = existing.abilities || existing.basestats;
+                        const currentHasData = pokemon.abilities || pokemon.basestats;
+                        
+                        // 둘 다 데이터가 있으면
+                        if (currentHasData && existingHasData) {
+                            // forme이 0이거나 null인 것을 우선 (기본 형태)
+                            const existingForme = existing.forme || 0;
+                            const currentForme = pokemon.forme || 0;
+                            
+                            if (currentForme === 0 && existingForme !== 0) {
+                                nameMap.set(key, pokemon);
+                            } else if (existingForme === 0 && currentForme !== 0) {
+                                // existing이 기본 형태면 유지
+                            } else {
+                                // 둘 다 같은 형태면 더 많은 데이터를 가진 것
+                                const existingDataCount = Object.keys(existing).length;
+                                const currentDataCount = Object.keys(pokemon).length;
+                                if (currentDataCount > existingDataCount) {
+                                    nameMap.set(key, pokemon);
+                                }
+                            }
+                        } else if (currentHasData && !existingHasData) {
+                            nameMap.set(key, pokemon);
+                        }
+                    }
+                });
+                
+                return Array.from(nameMap.values());
+            };
+
+            const filteredPokemon = getUniquePokemonByName(pokemonList).filter(pokemon => {
                 if (!pokemon) return false;
                 
                 const matchesSearch = pokemon.nameko?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                                     pokemon.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                                     pokemon.num?.toString().includes(searchTerm);
                 
-                const matchesType = !selectedType || pokemon.types?.includes(selectedType);
+                // 여러 타입 선택 시 AND 조건 (모든 선택한 타입을 포함해야 함)
+                let matchesType = true;
+                if (selectedTypes.length > 0) {
+                    const pokemonTypes = pokemon.types || [];
+                    matchesType = selectedTypes.every(selectedType => pokemonTypes.includes(selectedType));
+                }
                 
                 return matchesSearch && matchesType;
             });
 
-            // Get top 30 popular Pokemon
+            // Get top 30 popular Pokemon (중복 제거)
             const popularPokemon = rankingData && rankingData.length > 0 
-                ? rankingData.slice(0, 30).map(rank => {
-                    return pokemonList.find(p => p.num === rank.id);
-                }).filter(Boolean)
+                ? getUniquePokemonByName(
+                    rankingData.slice(0, 50).map(rank => {
+                        return pokemonList.find(p => p.num === rank.id);
+                    }).filter(Boolean)
+                ).slice(0, 30)
                 : [];
 
-            // 검색이나 필터가 없으면 인기 포켓몬, 있으면 필터된 포켓몬 표시
-            const displayPokemon = (searchTerm || selectedType) ? filteredPokemon.slice(0, 50) : 
-                                   (popularPokemon.length > 0 ? popularPokemon : pokemonList.slice(0, 30));
+            // 추천 포켓몬 (중복 제거)
+            const recommendedPokemon = getUniquePokemonByName(getRecommendedPokemon());
+
+            // 표시할 포켓몬 결정
+            let displayPokemon = [];
+            if (searchTerm || selectedTypes.length > 0) {
+                // 검색어가 있거나 타입 필터가 선택된 경우 필터된 포켓몬
+                displayPokemon = filteredPokemon;
+            } else {
+                // 기본: 인기 포켓몬
+                displayPokemon = popularPokemon.length > 0 ? popularPokemon : getUniquePokemonByName(pokemonList).slice(0, 30);
+            }
+            
+            // 최종 중복 제거 (이름 기준) - 추가 안전장치
+            const finalDisplayPokemon = getUniquePokemonByName(displayPokemon);
+            
+            // 페이지네이션 계산
+            const totalPages = Math.ceil(finalDisplayPokemon.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedPokemon = finalDisplayPokemon.slice(startIndex, endIndex);
+            
+            // 타입 필터 변경 시 페이지를 1로 리셋
+            useEffect(() => {
+                setCurrentPage(1);
+            }, [selectedTypes, searchTerm]);
 
             if (loading) {
                 return <div className="loading">데이터 로딩 중...</div>;
@@ -725,7 +1247,7 @@
                                     {pokemon ? (
                                         <>
                                             <img 
-                                                src={getPokemonImageUrl(pokemon.num)} 
+                                                src={getPokemonImageUrl(pokemon)} 
                                                 alt={pokemon.nameko || pokemon.name}
                                                 onError={(e) => {
                                                     e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
@@ -756,6 +1278,22 @@
                                 </div>
                             </div>
                         )}
+                        
+                        <div className="team-actions">
+                            <button 
+                                className="team-action-btn save-team-btn"
+                                onClick={() => setShowSaveModal(true)}
+                                disabled={team.filter(Boolean).length === 0}
+                            >
+                                💾 팀 저장하기
+                            </button>
+                            <button 
+                                className="team-action-btn load-team-btn"
+                                onClick={() => setShowLoadModal(true)}
+                            >
+                                📂 저장된 팀 불러오기
+                            </button>
+                        </div>
                     </div>
 
                     {/* Pokemon Selection Section */}
@@ -773,33 +1311,51 @@
                         </div>
 
                         <div className="type-filter">
-                            {Object.keys(TYPE_NAMES_KR).map(type => (
-                                <button
-                                    key={type}
-                                    className={`type-filter-btn ${TYPE_COLORS[type]} ${selectedType === type ? 'active' : ''}`}
-                                    onClick={() => setSelectedType(selectedType === type ? null : type)}
-                                    style={selectedType === type ? {} : {background: 'white', color: '#333'}}
-                                >
-                                    {TYPE_NAMES_KR[type]}
-                                </button>
-                            ))}
+                            {Object.keys(TYPE_NAMES_KR).map(type => {
+                                const isSelected = selectedTypes.includes(type);
+                                return (
+                                    <button
+                                        key={type}
+                                        className={`type-filter-btn ${TYPE_COLORS[type]} ${isSelected ? 'active' : ''}`}
+                                        onClick={() => {
+                                            if (isSelected) {
+                                                // 이미 선택된 타입이면 제거
+                                                setSelectedTypes(selectedTypes.filter(t => t !== type));
+                                            } else {
+                                                // 선택되지 않은 타입이면 추가
+                                                setSelectedTypes([...selectedTypes, type]);
+                                            }
+                                        }}
+                                        style={isSelected ? {} : {background: 'white', color: '#333'}}
+                                    >
+                                        {TYPE_NAMES_KR[type]}
+                                        {isSelected && ' ✓'}
+                                    </button>
+                                );
+                            })}
                         </div>
 
-                        {!searchTerm && !selectedType && rankingData.length > 0 && (
+                        {selectedTypes.length > 0 && (
+                            <p style={{margin: '15px 0', color: '#666'}}>
+                                💡 {selectedTypes.map(t => TYPE_NAMES_KR[t]).join(', ')} 타입 포켓몬 {finalDisplayPokemon.length}마리를 찾았습니다
+                            </p>
+                        )}
+                        
+                        {!searchTerm && selectedTypes.length === 0 && rankingData.length > 0 && (
                             <p style={{margin: '15px 0', color: '#666'}}>
                                 💡 현재 시즌 인기 포켓몬 TOP 30을 표시하고 있습니다
                             </p>
                         )}
 
                         <div className="pokemon-grid">
-                            {displayPokemon.map(pokemon => (
+                            {paginatedPokemon.map(pokemon => (
                                 <div 
                                     key={`${pokemon.num}-${pokemon.forme || 0}`}
                                     className="pokemon-card"
                                     onClick={() => setSelectedPokemon(pokemon)}
                                 >
                                     <img 
-                                        src={getPokemonImageUrl(pokemon.num)} 
+                                        src={getPokemonImageUrl(pokemon)} 
                                         alt={pokemon.nameko || pokemon.name}
                                         onError={(e) => {
                                             e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
@@ -818,7 +1374,124 @@
                             ))}
                         </div>
 
-                        {displayPokemon.length === 0 && (
+                        {/* 페이지네이션 */}
+                        {totalPages > 1 && (
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: '10px',
+                                marginTop: '30px',
+                                marginBottom: '20px',
+                                flexWrap: 'wrap'
+                            }}>
+                                <button
+                                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                                    disabled={currentPage === 1}
+                                    style={{
+                                        padding: '10px 20px',
+                                        fontSize: '16px',
+                                        border: '2px solid #667eea',
+                                        borderRadius: '8px',
+                                        background: currentPage === 1 ? '#e0e0e0' : 'white',
+                                        color: currentPage === 1 ? '#999' : '#667eea',
+                                        cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                                        fontWeight: '700'
+                                    }}
+                                >
+                                    이전
+                                </button>
+                                
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => {
+                                    // 현재 페이지 주변만 표시 (최대 7개)
+                                    if (totalPages <= 7) {
+                                        return (
+                                            <button
+                                                key={page}
+                                                onClick={() => setCurrentPage(page)}
+                                                style={{
+                                                    padding: '10px 15px',
+                                                    fontSize: '16px',
+                                                    border: '2px solid #667eea',
+                                                    borderRadius: '8px',
+                                                    background: currentPage === page ? '#667eea' : 'white',
+                                                    color: currentPage === page ? 'white' : '#667eea',
+                                                    cursor: 'pointer',
+                                                    fontWeight: '700',
+                                                    minWidth: '45px'
+                                                }}
+                                            >
+                                                {page}
+                                            </button>
+                                        );
+                                    } else {
+                                        // 많은 페이지일 때는 현재 페이지 주변만 표시
+                                        const showPage = 
+                                            page === 1 ||
+                                            page === totalPages ||
+                                            (page >= currentPage - 1 && page <= currentPage + 1);
+                                        
+                                        if (showPage) {
+                                            return (
+                                                <button
+                                                    key={page}
+                                                    onClick={() => setCurrentPage(page)}
+                                                    style={{
+                                                        padding: '10px 15px',
+                                                        fontSize: '16px',
+                                                        border: '2px solid #667eea',
+                                                        borderRadius: '8px',
+                                                        background: currentPage === page ? '#667eea' : 'white',
+                                                        color: currentPage === page ? 'white' : '#667eea',
+                                                        cursor: 'pointer',
+                                                        fontWeight: '700',
+                                                        minWidth: '45px'
+                                                    }}
+                                                >
+                                                    {page}
+                                                </button>
+                                            );
+                                        } else if (page === currentPage - 2 || page === currentPage + 2) {
+                                            return (
+                                                <span key={page} style={{padding: '0 5px', color: '#999'}}>...</span>
+                                            );
+                                        }
+                                        return null;
+                                    }
+                                })}
+                                
+                                <button
+                                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                                    disabled={currentPage === totalPages}
+                                    style={{
+                                        padding: '10px 20px',
+                                        fontSize: '16px',
+                                        border: '2px solid #667eea',
+                                        borderRadius: '8px',
+                                        background: currentPage === totalPages ? '#e0e0e0' : 'white',
+                                        color: currentPage === totalPages ? '#999' : '#667eea',
+                                        cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                                        fontWeight: '700'
+                                    }}
+                                >
+                                    다음
+                                </button>
+                            </div>
+                        )}
+                        
+                        {totalPages > 1 && (
+                            <p style={{
+                                textAlign: 'center',
+                                color: '#666',
+                                fontSize: '14px',
+                                marginTop: '10px',
+                                marginBottom: '20px'
+                            }}>
+                                {startIndex + 1} - {Math.min(endIndex, finalDisplayPokemon.length)} / 총 {finalDisplayPokemon.length}마리
+                            </p>
+                        )}
+
+                        {finalDisplayPokemon.length === 0 && (
                             <p style={{textAlign: 'center', padding: '50px', color: '#999'}}>
                                 검색 결과가 없습니다
                             </p>
@@ -835,13 +1508,103 @@
                             pokemonDetails={pokemonDetails}
                             movesData={movesData}
                             itemsData={itemsData}
+                            abilitiesData={abilitiesData}
                         />
+                    )}
+                    
+                    {/* Save Team Modal */}
+                    {showSaveModal && (
+                        <div className="modal" onClick={() => setShowSaveModal(false)}>
+                            <div className="modal-content save-modal-content" onClick={(e) => e.stopPropagation()}>
+                                <button className="modal-close" onClick={() => setShowSaveModal(false)}>×</button>
+                                <h2 style={{marginBottom: '20px', color: '#333'}}>팀 저장하기</h2>
+                                <input
+                                    type="text"
+                                    placeholder="팀 이름을 입력하세요"
+                                    value={teamName}
+                                    onChange={(e) => setTeamName(e.target.value)}
+                                    onKeyPress={(e) => {
+                                        if (e.key === 'Enter') {
+                                            saveTeam();
+                                        }
+                                    }}
+                                    autoFocus
+                                />
+                                <div className="save-modal-actions">
+                                    <button 
+                                        className="save-modal-btn save-modal-btn-secondary"
+                                        onClick={() => {
+                                            setShowSaveModal(false);
+                                            setTeamName('');
+                                        }}
+                                    >
+                                        취소
+                                    </button>
+                                    <button 
+                                        className="save-modal-btn save-modal-btn-primary"
+                                        onClick={saveTeam}
+                                    >
+                                        저장
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Load Team Modal */}
+                    {showLoadModal && (
+                        <div className="modal" onClick={() => setShowLoadModal(false)}>
+                            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                                <button className="modal-close" onClick={() => setShowLoadModal(false)}>×</button>
+                                <h2 style={{marginBottom: '20px', color: '#333'}}>저장된 팀 불러오기</h2>
+                                {savedTeams.length === 0 ? (
+                                    <p style={{textAlign: 'center', padding: '40px', color: '#999'}}>
+                                        저장된 팀이 없습니다.
+                                    </p>
+                                ) : (
+                                    <div className="saved-teams-list">
+                                        {savedTeams.map(savedTeam => (
+                                            <div 
+                                                key={savedTeam.id}
+                                                className="saved-team-item"
+                                                onClick={() => loadTeam(savedTeam)}
+                                            >
+                                                <div className="saved-team-info">
+                                                    <div className="saved-team-name">{savedTeam.name}</div>
+                                                    <div className="saved-team-date">{savedTeam.date}</div>
+                                                    <div className="saved-team-pokemon">
+                                                        {savedTeam.team.map((pokemon, idx) => (
+                                                            <img 
+                                                                key={idx}
+                                                                src={getPokemonImageUrl(pokemon)} 
+                                                                alt={pokemon.nameko || pokemon.name}
+                                                                onError={(e) => {
+                                                                    e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
+                                                                }}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <div className="saved-team-actions">
+                                                    <button 
+                                                        className="delete-team-btn"
+                                                        onClick={(e) => deleteTeam(savedTeam.id, e)}
+                                                    >
+                                                        삭제
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     )}
                 </div>
             );
         }
 
-        function PokemonDetailModal({ pokemon, onClose, onAddToTeam, getPokemonImageUrl, pokemonDetails, movesData, itemsData }) {
+        function PokemonDetailModal({ pokemon, onClose, onAddToTeam, getPokemonImageUrl, pokemonDetails, movesData, itemsData, abilitiesData }) {
             const TYPE_COLORS = {
                 'Normal': 'type-normal', 'Fighting': 'type-fighting', 'Flying': 'type-flying',
                 'Poison': 'type-poison', 'Ground': 'type-ground', 'Rock': 'type-rock',
@@ -876,7 +1639,7 @@
                         
                         <div className="pokemon-detail">
                             <img 
-                                src={getPokemonImageUrl(pokemon.num)} 
+                                src={getPokemonImageUrl(pokemon)} 
                                 alt={pokemon.nameko || pokemon.name}
                                 onError={(e) => {
                                     e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
@@ -893,7 +1656,7 @@
                             </div>
 
                             <div className="stats-section">
-                                <h3>📊 기본 스탯</h3>
+                                <h3>📊 기본 종족값</h3>
                                 {pokemon.basestats && Object.entries(pokemon.basestats).map(([stat, value]) => (
                                     <div key={stat} className="stat-bar">
                                         <div className="stat-bar-label">
@@ -912,15 +1675,338 @@
                                 ))}
                             </div>
 
+                            {/* Hexagon Stat Chart with Recommended EVs */}
+                            {pokemon.basestats && (() => {
+                                const stats = pokemon.basestats;
+                                const statOrder = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
+                                
+                                // 추천 노력치 계산 (기본 스탯 기반, 더 정확한 로직)
+                                const calculateRecommendedEVs = (basestats) => {
+                                    const evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+                                    
+                                    // 공격형 vs 특수공격형 판단
+                                    const isPhysical = basestats.atk >= basestats.spa;
+                                    const isSpecial = basestats.spa > basestats.atk;
+                                    
+                                    // 방어형 vs 특수방어형 판단
+                                    const isPhysicalDefense = basestats.def >= basestats.spd;
+                                    const isSpecialDefense = basestats.spd > basestats.def;
+                                    
+                                    // 스피드가 높으면 스피드형 (80 이상)
+                                    const isSpeed = basestats.spe >= 80;
+                                    
+                                    // 공격력이 높은지 판단 (90 이상)
+                                    const hasHighAttack = basestats.atk >= 90 || basestats.spa >= 90;
+                                    // 방어력이 높은지 판단 (90 이상)
+                                    const hasHighDefense = basestats.def >= 90 || basestats.spd >= 90;
+                                    
+                                    if (isSpeed && hasHighAttack) {
+                                        // 스피드 공격형: 스피드 252 + 주 공격 252 + HP 6
+                                        evs.spe = 252;
+                                        if (isPhysical) {
+                                            evs.atk = 252;
+                                        } else {
+                                            evs.spa = 252;
+                                        }
+                                        evs.hp = 6;
+                                    } else if (hasHighAttack && !hasHighDefense) {
+                                        // 공격형: 주 공격 252 + 스피드 252 + HP 6
+                                        if (isPhysical) {
+                                            evs.atk = 252;
+                                        } else {
+                                            evs.spa = 252;
+                                        }
+                                        evs.spe = 252;
+                                        evs.hp = 6;
+                                    } else if (hasHighDefense && !hasHighAttack) {
+                                        // 방어형: HP 252 + 주 방어 252 + 나머지 6
+                                        evs.hp = 252;
+                                        if (isPhysicalDefense) {
+                                            evs.def = 252;
+                                        } else {
+                                            evs.spd = 252;
+                                        }
+                                        // 나머지 6은 스피드에 투자
+                                        evs.spe = 6;
+                                    } else if (hasHighDefense && hasHighAttack) {
+                                        // 밸런스형: HP 252 + 주 공격 128 + 주 방어 130
+                                        evs.hp = 252;
+                                        if (isPhysical) {
+                                            evs.atk = 128;
+                                        } else {
+                                            evs.spa = 128;
+                                        }
+                                        if (isPhysicalDefense) {
+                                            evs.def = 130;
+                                        } else {
+                                            evs.spd = 130;
+                                        }
+                                    } else {
+                                        // 일반형: HP 252 + 주 공격 252 + 스피드 6
+                                        evs.hp = 252;
+                                        if (isPhysical) {
+                                            evs.atk = 252;
+                                        } else {
+                                            evs.spa = 252;
+                                        }
+                                        evs.spe = 6;
+                                    }
+                                    
+                                    // 총합이 510이 되도록 조정
+                                    const total = Object.values(evs).reduce((sum, val) => sum + val, 0);
+                                    if (total !== 510) {
+                                        // 부족한 부분을 HP에 추가
+                                        evs.hp += (510 - total);
+                                    }
+                                    
+                                    return evs;
+                                };
+                                
+                                const recommendedEVs = calculateRecommendedEVs(stats);
+                                
+                                // 노력치 반영 후 최종 스탯 계산 (레벨 50 기준, 개체값 31, 성격 보정 없음)
+                                const calculateFinalStats = (basestats, evs) => {
+                                    const finalStats = {};
+                                    statOrder.forEach(stat => {
+                                        const base = basestats[stat] || 0;
+                                        const ev = evs[stat] || 0;
+                                        // 레벨 50 기준 공식:
+                                        // HP: ((종족값 × 2 + 개체값 31 + 노력치 ÷ 4) × 레벨 50 ÷ 100) + 레벨 50 + 10
+                                        // 기타: ((종족값 × 2 + 개체값 31 + 노력치 ÷ 4) × 레벨 50 ÷ 100) + 5
+                                        const evBonus = Math.floor(ev / 4);
+                                        const statValue = base * 2 + 31 + evBonus;
+                                        
+                                        if (stat === 'hp') {
+                                            finalStats[stat] = Math.floor(statValue * 50 / 100) + 50 + 10;
+                                        } else {
+                                            finalStats[stat] = Math.floor(statValue * 50 / 100) + 5;
+                                        }
+                                    });
+                                    return finalStats;
+                                };
+                                
+                                const finalStats = calculateFinalStats(stats, recommendedEVs);
+                                
+                                const centerX = 175;
+                                const centerY = 175;
+                                const radius = 100;
+                                
+                                // 최대값 찾기 (정규화용 - 최종 스탯 기준으로 통일, 최소 200으로 설정)
+                                const maxStat = Math.max(
+                                    Math.max(...Object.values(finalStats)), 
+                                    Math.max(...Object.values(stats)),
+                                    200
+                                );
+                                
+                                // 각 능력치의 좌표 계산
+                                const getStatPoint = (index, value) => {
+                                    const angle = (index * 60 - 90) * (Math.PI / 180);
+                                    const normalizedValue = (value / maxStat) * radius;
+                                    const x = centerX + normalizedValue * Math.cos(angle);
+                                    const y = centerY + normalizedValue * Math.sin(angle);
+                                    return { x, y, angle, value };
+                                };
+                                
+                                // 기본 종족값과 최종 스탯을 같은 스케일로 비교하기 위해 통일된 최대값 사용
+                                // 기본 종족값 포인트 (통일된 maxStat 사용)
+                                const basePoints = statOrder.map((stat, index) => {
+                                    const value = stats[stat] || 0;
+                                    return getStatPoint(index, value);
+                                });
+                                
+                                // 노력치 반영 후 포인트 (통일된 maxStat 사용)
+                                const evPoints = statOrder.map((stat, index) => {
+                                    const value = finalStats[stat] || 0;
+                                    return getStatPoint(index, value);
+                                });
+                                
+                                // 기본 종족값 육각형 경로
+                                const basePathData = basePoints.map((p, i) => 
+                                    `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
+                                ).join(' ') + ' Z';
+                                
+                                // 노력치 반영 후 육각형 경로
+                                const evPathData = evPoints.map((p, i) => 
+                                    `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
+                                ).join(' ') + ' Z';
+                                
+                                // 그리드 라인 생성 (5단계)
+                                const gridLines = [];
+                                for (let i = 1; i <= 5; i++) {
+                                    const gridRadius = (radius / 5) * i;
+                                    const gridPoints = statOrder.map((stat, index) => {
+                                        const angle = (index * 60 - 90) * (Math.PI / 180);
+                                        const x = centerX + gridRadius * Math.cos(angle);
+                                        const y = centerY + gridRadius * Math.sin(angle);
+                                        return { x, y };
+                                    });
+                                    const gridPath = gridPoints.map((p, i) => 
+                                        `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
+                                    ).join(' ') + ' Z';
+                                    gridLines.push(gridPath);
+                                }
+                                
+                                // 라벨 위치 계산 (더 밖으로)
+                                const labelRadius = radius + 45;
+                                const labelPoints = statOrder.map((stat, index) => {
+                                    const angle = (index * 60 - 90) * (Math.PI / 180);
+                                    const x = centerX + labelRadius * Math.cos(angle);
+                                    const y = centerY + labelRadius * Math.sin(angle);
+                                    return { x, y, stat, baseValue: stats[stat] || 0, evValue: recommendedEVs[stat] || 0, finalValue: finalStats[stat] || 0 };
+                                });
+                                
+                                return (
+                                    <div className="stats-section">
+                                        <h3>⭐ 추천 개체값 (육각형 그래프)</h3>
+                                        <div style={{marginBottom: '15px', padding: '15px', background: '#f8f9fa', borderRadius: '10px'}}>
+                                            <h4 style={{marginBottom: '10px', color: '#333'}}>💪 추천 노력치 분배</h4>
+                                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', fontSize: '14px'}}>
+                                                {statOrder.map(stat => {
+                                                    const ev = recommendedEVs[stat] || 0;
+                                                    if (ev > 0) {
+                                                        return (
+                                                            <div key={stat} style={{display: 'flex', justifyContent: 'space-between', padding: '5px'}}>
+                                                                <span>{STAT_NAMES[stat]}:</span>
+                                                                <span style={{fontWeight: '700', color: '#667eea'}}>{ev}</span>
+                                                            </div>
+                                                        );
+                                                    }
+                                                    return null;
+                                                }).filter(Boolean)}
+                                            </div>
+                                        </div>
+                                        <div className="hexagon-chart-container">
+                                            <div className="hexagon-chart">
+                                                <svg viewBox="0 0 350 350" style={{overflow: 'visible'}} preserveAspectRatio="xMidYMid meet">
+                                                    {/* 그리드 라인 */}
+                                                    {gridLines.map((path, i) => (
+                                                        <path
+                                                            key={i}
+                                                            d={path}
+                                                            className="hexagon-grid"
+                                                        />
+                                                    ))}
+                                                    
+                                                    {/* 기본 종족값 영역 (보라색) */}
+                                                    <path
+                                                        d={basePathData}
+                                                        className="hexagon-fill"
+                                                    />
+                                                    
+                                                    {/* 노력치 반영 후 영역 (노란색) */}
+                                                    <path
+                                                        d={evPathData}
+                                                        fill="rgba(255, 193, 7, 0.3)"
+                                                        stroke="#ffc107"
+                                                        strokeWidth="2"
+                                                        style={{transition: 'all 0.3s'}}
+                                                    />
+                                                    
+                                                    {/* 기본 종족값 점 */}
+                                                    {basePoints.map((point, i) => (
+                                                        <circle
+                                                            key={`base-${i}`}
+                                                            cx={point.x}
+                                                            cy={point.y}
+                                                            className="hexagon-point"
+                                                        />
+                                                    ))}
+                                                    
+                                                    {/* 노력치 반영 후 점 (노란색) */}
+                                                    {evPoints.map((point, i) => {
+                                                        const ev = recommendedEVs[statOrder[i]] || 0;
+                                                        if (ev > 0) {
+                                                            return (
+                                                                <circle
+                                                                    key={`ev-${i}`}
+                                                                    cx={point.x}
+                                                                    cy={point.y}
+                                                                    r="5"
+                                                                    fill="#ffc107"
+                                                                    stroke="#ff9800"
+                                                                    strokeWidth="2"
+                                                                />
+                                                            );
+                                                        }
+                                                        return null;
+                                                    }).filter(Boolean)}
+                                                    
+                                                    {/* 라벨 */}
+                                                    {labelPoints.map((label, i) => {
+                                                        const ev = recommendedEVs[label.stat] || 0;
+                                                        // HP는 위쪽에 있으므로 y 위치 조정
+                                                        const isTop = i === 0; // HP
+                                                        const labelY = isTop ? label.y - 15 : label.y - 10;
+                                                        const valueY = isTop ? label.y - 2 : label.y + 5;
+                                                        const evY = isTop ? label.y + 8 : label.y + 18;
+                                                        
+                                                        return (
+                                                            <g key={i}>
+                                                                <text
+                                                                    x={label.x}
+                                                                    y={labelY}
+                                                                    className="hexagon-label"
+                                                                    style={{fontSize: isTop ? '11px' : '12px'}}
+                                                                >
+                                                                    {STAT_NAMES[label.stat] || label.stat.toUpperCase()}
+                                                                </text>
+                                                                <text
+                                                                    x={label.x}
+                                                                    y={valueY}
+                                                                    className="hexagon-value"
+                                                                >
+                                                                    {label.baseValue}
+                                                                </text>
+                                                                {ev > 0 && (
+                                                                    <text
+                                                                        x={label.x}
+                                                                        y={evY}
+                                                                        style={{fontSize: '10px', fill: '#ffc107', fontWeight: '700'}}
+                                                                        textAnchor="middle"
+                                                                    >
+                                                                        +{ev}EV
+                                                                    </text>
+                                                                )}
+                                                            </g>
+                                                        );
+                                                    })}
+                                                </svg>
+                                            </div>
+                                            <div style={{textAlign: 'center', marginTop: '15px', fontSize: '12px', color: '#666'}}>
+                                                <div style={{display: 'inline-flex', alignItems: 'center', gap: '10px', marginRight: '20px'}}>
+                                                    <div style={{width: '15px', height: '15px', background: 'rgba(102, 126, 234, 0.3)', border: '2px solid #667eea', borderRadius: '3px'}}></div>
+                                                    <span>기본 종족값</span>
+                                                </div>
+                                                <div style={{display: 'inline-flex', alignItems: 'center', gap: '10px'}}>
+                                                    <div style={{width: '15px', height: '15px', background: 'rgba(255, 193, 7, 0.3)', border: '2px solid #ffc107', borderRadius: '3px'}}></div>
+                                                    <span>노력치 반영 후</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })()}
+
                             {pokemon.abilities && (
                                 <div className="moves-section">
                                     <h3>✨ 특성</h3>
-                                    <div style={{display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
-                                        {Object.entries(pokemon.abilities).map(([key, ability]) => (
-                                            <span key={key} className="move-item">
-                                                {ability} {key === 'H' ? '(숨겨진 특성)' : ''}
-                                            </span>
-                                        ))}
+                                    <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+                                        {Object.entries(pokemon.abilities).map(([key, abilityName]) => {
+                                            // abilitiesData에서 특성 정보 찾기
+                                            const abilityInfo = abilitiesData.find(a => 
+                                                a.name === abilityName || a.nameko === abilityName
+                                            );
+                                            const displayName = abilityInfo?.nameko || abilityName;
+                                            const description = abilityInfo?.desc || abilityInfo?.shortdesc || '';
+                                            
+                                            return (
+                                                <div key={key} style={{background: '#f8f9fa', padding: '12px', borderRadius: '10px'}}>
+                                                    <div style={{fontWeight: '700', fontSize: '16px'}}>
+                                                        {displayName} {key === 'H' ? '(숨겨진 특성)' : ''}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             )}
@@ -1021,7 +2107,7 @@
                                                 {TYPE_NAMES_KR[moveInfo.move.type] || moveInfo.move.type}
                                             </span>
                                         )}
-                                        {moveInfo.move.basepower && ` | 위력: ${moveInfo.move.basepower}`}
+                                        {moveInfo.move.basepower && moveInfo.move.basepower > 0 && ` | 위력: ${moveInfo.move.basepower}`}
                                     </div>
                                 </div>
                                 <div style={{fontSize: '14px', fontWeight: '700', color: '#667eea'}}>
@@ -1079,25 +2165,88 @@
                 <div className="items-section">
                     <h3>🎒 추천 지닌 도구 (사용률 기준)</h3>
                     <div className="items-grid">
-                        {topItems.map((itemInfo, index) => (
-                            <div key={index} className="item-item" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                                <div>
-                                    <div style={{fontWeight: '700', marginBottom: '3px'}}>
-                                        {itemInfo.item.nameko || itemInfo.item.name}
-                                    </div>
-                                    {itemInfo.item.desc && (
-                                        <div style={{fontSize: '11px', color: '#666', lineHeight: '1.3'}}>
-                                            {itemInfo.item.desc.length > 50 
-                                                ? itemInfo.item.desc.substring(0, 50) + '...'
-                                                : itemInfo.item.desc}
+                        {topItems.map((itemInfo, index) => {
+                            // 도구 이미지 URL 생성
+                            const getItemImageUrl = (item) => {
+                                if (!item) return '';
+                                
+                                // PokeAPI 아이템 이미지 URL 형식
+                                // 방법 1: index 필드 사용 (가장 정확)
+                                if (item.index) {
+                                    // index를 그대로 사용 (예: "leftovers", "life-orb" 등)
+                                    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${item.index}.png`;
+                                }
+                                
+                                // 방법 2: name을 기반으로 변환
+                                if (item.name) {
+                                    // PokeAPI 형식에 맞게 변환
+                                    let itemName = item.name
+                                        .toLowerCase()
+                                        .replace(/\s+/g, '-')
+                                        .replace(/[^a-z0-9-]/g, '')
+                                        .replace(/-+/g, '-')
+                                        .replace(/^-|-$/g, '');
+                                    
+                                    // 특수 케이스 처리
+                                    itemName = itemName
+                                        .replace(/['"]/g, '')
+                                        .replace(/\./g, '')
+                                        .replace(/&/g, 'and');
+                                    
+                                    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${itemName}.png`;
+                                }
+                                
+                                return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
+                            };
+                            
+                            return (
+                                <div key={index} className="item-item" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '10px'}}>
+                                    <div style={{display: 'flex', alignItems: 'center', gap: '10px', flex: 1}}>
+                                        <img 
+                                            src={getItemImageUrl(itemInfo.item)} 
+                                            alt={itemInfo.item.nameko || itemInfo.item.name}
+                                            style={{width: '40px', height: '40px', objectFit: 'contain', flexShrink: 0}}
+                                            onError={(e) => {
+                                                // 이미지 로드 실패 시 여러 방법 시도
+                                                const item = itemInfo.item;
+                                                const img = e.target;
+                                                
+                                                // 재시도 횟수 확인 (무한 루프 방지)
+                                                if (!img.dataset.retryCount) {
+                                                    img.dataset.retryCount = '0';
+                                                }
+                                                const retryCount = parseInt(img.dataset.retryCount);
+                                                
+                                                if (retryCount === 0 && item.index) {
+                                                    // 첫 번째 재시도: index로 다시 시도
+                                                    img.dataset.retryCount = '1';
+                                                    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${item.index}.png`;
+                                                } else if (retryCount <= 1 && item.name) {
+                                                    // 두 번째 재시도: name 기반 변환
+                                                    img.dataset.retryCount = '2';
+                                                    const itemName = item.name.toLowerCase()
+                                                        .replace(/\s+/g, '-')
+                                                        .replace(/[^a-z0-9-]/g, '')
+                                                        .replace(/&/g, 'and');
+                                                    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${itemName}.png`;
+                                                } else {
+                                                    // 최종 실패: 기본 이미지 사용
+                                                    img.src = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png';
+                                                }
+                                            }}
+                                        />
+                                        <div>
+                                            <div style={{fontWeight: '700'}}>
+                                                {itemInfo.item.nameko || itemInfo.item.name}
+                                            </div>
                                         </div>
-                                    )}
+                                    </div>
+                                    <div style={{fontSize: '14px', fontWeight: '700', color: '#667eea', marginLeft: '10px', flexShrink: 0}}>
+                                        {parseFloat(itemInfo.val).toFixed(1)}%
+                                    </div>
                                 </div>
-                                <div style={{fontSize: '14px', fontWeight: '700', color: '#667eea', marginLeft: '10px'}}>
-                                    {parseFloat(itemInfo.val).toFixed(1)}%
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
             );
