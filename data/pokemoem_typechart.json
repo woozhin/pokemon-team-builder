@@ -1,0 +1,663 @@
+[{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c60b"
+  },
+  "damagetaken": {
+    "Bug": 0,
+    "Ice": 0,
+    "Dark": 0,
+    "Fire": 2,
+    "Rock": 0,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 1,
+    "Steel": 1,
+    "Water": 1,
+    "Dragon": 0,
+    "Flying": 2,
+    "Ground": 1,
+    "Normal": 2,
+    "Poison": 2,
+    "Psychic": 0,
+    "Electric": 0,
+    "Fighting": 1,
+    "sandstorm": 3
+  },
+  "hpdvs": {
+    "atk": 13,
+    "def": 12
+  },
+  "hpivs": {
+    "def": 30,
+    "spd": 30,
+    "spe": 30
+  },
+  "index": "rock",
+  "nameko": "바위",
+  "num": 5,
+  "namejp": "いわ"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c601"
+  },
+  "damagetaken": {
+    "Bug": 2,
+    "Ice": 0,
+    "Dark": 2,
+    "Fire": 0,
+    "Rock": 0,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 0,
+    "Steel": 1,
+    "Water": 0,
+    "Dragon": 3,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 1,
+    "Psychic": 0,
+    "Electric": 0,
+    "Fighting": 2
+  },
+  "hpdvs": null,
+  "hpivs": null,
+  "index": "fairy",
+  "nameko": "페어리",
+  "num": 17,
+  "namejp": "フェアリー"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c600"
+  },
+  "damagetaken": {
+    "Bug": 0,
+    "Ice": 1,
+    "Dark": 0,
+    "Fire": 2,
+    "Rock": 0,
+    "Fairy": 1,
+    "Ghost": 0,
+    "Grass": 2,
+    "Steel": 0,
+    "Water": 2,
+    "Dragon": 1,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 0,
+    "Electric": 2,
+    "Fighting": 0
+  },
+  "hpdvs": {
+    "def": 14
+  },
+  "hpivs": {
+    "atk": 30
+  },
+  "index": "dragon",
+  "nameko": "드래곤",
+  "num": 15,
+  "namejp": "ドラゴン"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c60e"
+  },
+  "damagetaken": {
+    "Bug": 0,
+    "Ice": 2,
+    "Dark": 0,
+    "Fire": 2,
+    "Rock": 0,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 1,
+    "Steel": 2,
+    "Water": 2,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 0,
+    "Electric": 1,
+    "Fighting": 0
+  },
+  "hpdvs": {
+    "atk": 14,
+    "def": 13
+  },
+  "hpivs": {
+    "atk": 30,
+    "def": 30,
+    "spa": 30
+  },
+  "index": "water",
+  "nameko": "물",
+  "num": 10,
+  "namejp": "みず"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c603"
+  },
+  "damagetaken": {
+    "Bug": 2,
+    "Ice": 0,
+    "Dark": 2,
+    "Fire": 0,
+    "Rock": 2,
+    "Fairy": 1,
+    "Ghost": 0,
+    "Grass": 0,
+    "Steel": 0,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 1,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 1,
+    "Electric": 0,
+    "Fighting": 0
+  },
+  "hpdvs": {
+    "atk": 12,
+    "def": 12
+  },
+  "hpivs": {
+    "def": 30,
+    "spa": 30,
+    "spd": 30,
+    "spe": 30
+  },
+  "index": "fighting",
+  "nameko": "격투",
+  "num": 1,
+  "namejp": "かくとう"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c608"
+  },
+  "damagetaken": {
+    "Bug": 1,
+    "Ice": 1,
+    "Dark": 0,
+    "Fire": 1,
+    "Rock": 0,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 2,
+    "Steel": 0,
+    "Water": 2,
+    "Dragon": 0,
+    "Flying": 1,
+    "Ground": 2,
+    "Normal": 0,
+    "Poison": 1,
+    "powder": 3,
+    "Psychic": 0,
+    "Electric": 2,
+    "Fighting": 0
+  },
+  "hpdvs": {
+    "atk": 14,
+    "def": 14
+  },
+  "hpivs": {
+    "atk": 30,
+    "spa": 30
+  },
+  "index": "grass",
+  "nameko": "풀",
+  "num": 11,
+  "namejp": "くさ"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c60c"
+  },
+  "damagetaken": {
+    "Bug": 0,
+    "Ice": 0,
+    "Dark": 0,
+    "Fire": 0,
+    "Rock": 0,
+    "Fairy": 0,
+    "Ghost": 3,
+    "Grass": 0,
+    "Steel": 0,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 0,
+    "Electric": 0,
+    "Fighting": 1
+  },
+  "hpdvs": null,
+  "hpivs": null,
+  "index": "normal",
+  "nameko": "노말",
+  "num": 0,
+  "namejp": "ノーマル"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c5ff"
+  },
+  "damagetaken": {
+    "Bug": 0,
+    "Ice": 0,
+    "Dark": 0,
+    "Fire": 1,
+    "Rock": 1,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 2,
+    "Steel": 0,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 1,
+    "Ground": 2,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 0,
+    "Electric": 0,
+    "Fighting": 2
+  },
+  "hpdvs": {
+    "atk": 13,
+    "def": 13
+  },
+  "hpivs": {
+    "atk": 30,
+    "def": 30,
+    "spd": 30
+  },
+  "index": "bug",
+  "nameko": "벌레",
+  "num": 6,
+  "namejp": "むし"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c602"
+  },
+  "damagetaken": {
+    "Bug": 0,
+    "Ice": 0,
+    "par": 3,
+    "Dark": 0,
+    "Fire": 0,
+    "Rock": 0,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 0,
+    "Steel": 2,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 2,
+    "Ground": 1,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 0,
+    "Electric": 2,
+    "Fighting": 0
+  },
+  "hpdvs": {
+    "atk": 14
+  },
+  "hpivs": {
+    "spa": 30
+  },
+  "index": "electric",
+  "nameko": "전기",
+  "num": 12,
+  "namejp": "でんき"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c60a"
+  },
+  "damagetaken": {
+    "Bug": 1,
+    "Ice": 0,
+    "Dark": 1,
+    "Fire": 0,
+    "Rock": 0,
+    "Fairy": 0,
+    "Ghost": 1,
+    "Grass": 0,
+    "Steel": 0,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 2,
+    "Electric": 0,
+    "Fighting": 2
+  },
+  "hpdvs": {
+    "def": 12
+  },
+  "hpivs": {
+    "atk": 30,
+    "spe": 30
+  },
+  "index": "psychic",
+  "nameko": "에스퍼",
+  "num": 13,
+  "namejp": "エスパー"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c607"
+  },
+  "damagetaken": {
+    "Bug": 2,
+    "Ice": 1,
+    "Dark": 0,
+    "Fire": 0,
+    "Rock": 1,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 2,
+    "Steel": 0,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 3,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 0,
+    "Electric": 1,
+    "Fighting": 2
+  },
+  "hpdvs": {
+    "atk": 12,
+    "def": 13
+  },
+  "hpivs": {
+    "hp": 30,
+    "atk": 30,
+    "def": 30,
+    "spa": 30,
+    "spd": 30
+  },
+  "index": "flying",
+  "nameko": "비행",
+  "num": 2,
+  "namejp": "ひこう"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c60d"
+  },
+  "damagetaken": {
+    "Bug": 2,
+    "Ice": 2,
+    "psn": 3,
+    "tox": 3,
+    "Dark": 0,
+    "Fire": 1,
+    "Rock": 2,
+    "Fairy": 2,
+    "Ghost": 0,
+    "Grass": 2,
+    "Steel": 2,
+    "Water": 0,
+    "Dragon": 2,
+    "Flying": 2,
+    "Ground": 1,
+    "Normal": 2,
+    "Poison": 3,
+    "Psychic": 2,
+    "Electric": 0,
+    "Fighting": 1,
+    "sandstorm": 3
+  },
+  "hpdvs": {
+    "atk": 13
+  },
+  "hpivs": {
+    "spd": 30
+  },
+  "index": "steel",
+  "nameko": "강철",
+  "num": 8,
+  "namejp": "はがね"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c610"
+  },
+  "damagetaken": {
+    "Bug": 2,
+    "Ice": 0,
+    "psn": 3,
+    "tox": 3,
+    "Dark": 0,
+    "Fire": 0,
+    "Rock": 0,
+    "Fairy": 2,
+    "Ghost": 0,
+    "Grass": 2,
+    "Steel": 0,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 1,
+    "Normal": 0,
+    "Poison": 2,
+    "Psychic": 1,
+    "Electric": 0,
+    "Fighting": 2
+  },
+  "hpdvs": {
+    "atk": 12,
+    "def": 14
+  },
+  "hpivs": {
+    "def": 30,
+    "spa": 30,
+    "spd": 30
+  },
+  "index": "poison",
+  "nameko": "독",
+  "num": 3,
+  "namejp": "どく"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c606"
+  },
+  "damagetaken": {
+    "Bug": 1,
+    "Ice": 0,
+    "Dark": 2,
+    "Fire": 0,
+    "Rock": 0,
+    "Fairy": 1,
+    "Ghost": 2,
+    "Grass": 0,
+    "Steel": 0,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 3,
+    "Electric": 0,
+    "Fighting": 1,
+    "prankster": 3
+  },
+  "hpdvs": null,
+  "hpivs": {},
+  "index": "dark",
+  "nameko": "악",
+  "num": 16,
+  "namejp": "あく"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c60f"
+  },
+  "damagetaken": {
+    "Bug": 0,
+    "Ice": 2,
+    "frz": 3,
+    "Dark": 0,
+    "Fire": 1,
+    "Rock": 1,
+    "hail": 3,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 0,
+    "Steel": 1,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 0,
+    "Electric": 0,
+    "Fighting": 1
+  },
+  "hpdvs": {
+    "def": 13
+  },
+  "hpivs": {
+    "atk": 30,
+    "def": 30
+  },
+  "index": "ice",
+  "nameko": "얼음",
+  "num": 14,
+  "namejp": "こおり"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c604"
+  },
+  "damagetaken": {
+    "Bug": 2,
+    "Ice": 2,
+    "brn": 3,
+    "Dark": 0,
+    "Fire": 2,
+    "Rock": 1,
+    "Fairy": 2,
+    "Ghost": 0,
+    "Grass": 2,
+    "Steel": 2,
+    "Water": 1,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 1,
+    "Normal": 0,
+    "Poison": 0,
+    "Psychic": 0,
+    "Electric": 0,
+    "Fighting": 0
+  },
+  "hpdvs": {
+    "atk": 14,
+    "def": 12
+  },
+  "hpivs": {
+    "atk": 30,
+    "spa": 30,
+    "spe": 30
+  },
+  "index": "fire",
+  "nameko": "불꽃",
+  "num": 9,
+  "namejp": "ほのお"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c605"
+  },
+  "damagetaken": {
+    "Bug": 2,
+    "Ice": 0,
+    "Dark": 1,
+    "Fire": 0,
+    "Rock": 0,
+    "Fairy": 0,
+    "Ghost": 1,
+    "Grass": 0,
+    "Steel": 0,
+    "Water": 0,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 3,
+    "Poison": 2,
+    "Psychic": 0,
+    "trapped": 3,
+    "Electric": 0,
+    "Fighting": 3
+  },
+  "hpdvs": {
+    "atk": 13,
+    "def": 14
+  },
+  "hpivs": {
+    "def": 30,
+    "spd": 30
+  },
+  "index": "ghost",
+  "nameko": "고스트",
+  "num": 7,
+  "namejp": "ゴースト"
+},
+{
+  "_id": {
+    "$oid": "63188e6480cb53d27624c609"
+  },
+  "damagetaken": {
+    "Bug": 0,
+    "Ice": 1,
+    "Dark": 0,
+    "Fire": 0,
+    "Rock": 2,
+    "Fairy": 0,
+    "Ghost": 0,
+    "Grass": 1,
+    "Steel": 0,
+    "Water": 1,
+    "Dragon": 0,
+    "Flying": 0,
+    "Ground": 0,
+    "Normal": 0,
+    "Poison": 2,
+    "Psychic": 0,
+    "Electric": 3,
+    "Fighting": 0,
+    "sandstorm": 3
+  },
+  "hpdvs": {
+    "atk": 12
+  },
+  "hpivs": {
+    "spa": 30,
+    "spd": 30
+  },
+  "index": "ground",
+  "nameko": "땅",
+  "num": 4,
+  "namejp": "じめん"
+}]

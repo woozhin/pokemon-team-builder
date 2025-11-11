@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>팀 빌더 - PocketChoice</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            max-width: 400px;
+            width: 90%;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+        }
+        
+        .back-btn {
+            background: white;
+            color: #667eea;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Team Slots */
+        .team-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .team-section h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .team-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .team-slot {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            border: 3px dashed #ccc;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-slot:hover {
+            transform: scale(1.05);
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .team-slot.filled {
+            background: white;
+            border: 3px solid #667eea;
+        }
+        
+        .team-slot img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+        
+        .team-slot .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #ff5252;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1;
+        }
+        
+        .team-slot .pokemon-name {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3px;
+        }
+        
+        .team-analysis {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .team-analysis h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .type-coverage {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .type-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+        }
+        
+        .weakness-list, .resistance-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        /* Pokemon List */
+        .pokemon-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pokemon-section h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .search-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .type-filter {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .type-filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .type-filter-btn.active {
+            color: white;
+            border-color: transparent;
+        }
+        
+        .pokemon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .pokemon-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .pokemon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+        
+        .pokemon-card img {
+            width: 100%;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        
+        .pokemon-card .name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .pokemon-card .number {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .pokemon-types {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+        
+        .pokemon-types .type-badge {
+            font-size: 10px;
+            padding: 3px 8px;
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff5252;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
+        .pokemon-detail {
+            text-align: center;
+        }
+        
+        .pokemon-detail img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin: 20px auto;
+        }
+        
+        .pokemon-detail h2 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .stats-section {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .stats-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .stat-bar {
+            margin-bottom: 10px;
+        }
+        
+        .stat-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .stat-bar-fill {
+            height: 25px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .moves-section, .items-section {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .moves-grid, .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        
+        .move-item, .item-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        
+        .add-to-team-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .add-to-team-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        /* Type Colors */
+        .type-normal { background: #A8A878; }
+        .type-fighting { background: #C03028; }
+        .type-flying { background: #A890F0; }
+        .type-poison { background: #A040A0; }
+        .type-ground { background: #E0C068; }
+        .type-rock { background: #B8A038; }
+        .type-bug { background: #A8B820; }
+        .type-ghost { background: #705898; }
+        .type-steel { background: #B8B8D0; }
+        .type-fire { background: #F08030; }
+        .type-water { background: #6890F0; }
+        .type-grass { background: #78C850; }
+        .type-electric { background: #F8D030; }
+        .type-psychic { background: #F85888; }
+        .type-ice { background: #98D8D8; }
+        .type-dragon { background: #7038F8; }
+        .type-dark { background: #705848; }
+        .type-fairy { background: #EE99AC; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Type colors mapping
+        const TYPE_COLORS = {
+            'Normal': 'type-normal', 'Fighting': 'type-fighting', 'Flying': 'type-flying',
+            'Poison': 'type-poison', 'Ground': 'type-ground', 'Rock': 'type-rock',
+            'Bug': 'type-bug', 'Ghost': 'type-ghost', 'Steel': 'type-steel',
+            'Fire': 'type-fire', 'Water': 'type-water', 'Grass': 'type-grass',
+            'Electric': 'type-electric', 'Psychic': 'type-psychic', 'Ice': 'type-ice',
+            'Dragon': 'type-dragon', 'Dark': 'type-dark', 'Fairy': 'type-fairy'
+        };
+
+        // Korean type names
+        const TYPE_NAMES_KR = {
+            'Normal': '노말', 'Fighting': '격투', 'Flying': '비행',
+            'Poison': '독', 'Ground': '땅', 'Rock': '바위',
+            'Bug': '벌레', 'Ghost': '고스트', 'Steel': '강철',
+            'Fire': '불꽃', 'Water': '물', 'Grass': '풀',
+            'Electric': '전기', 'Psychic': '에스퍼', 'Ice': '얼음',
+            'Dragon': '드래곤', 'Dark': '악', 'Fairy': '페어리'
+        };
+
+        function TeamBuilder() {
+            const [team, setTeam] = useState([null, null, null, null, null, null]);
+            const [pokemonList, setPokemonList] = useState([]);
+            const [rankingData, setRankingData] = useState([]);
+            const [typeChart, setTypeChart] = useState([]);
+            const [pokemonDetails, setPokemonDetails] = useState(null);
+            const [movesData, setMovesData] = useState([]);
+            const [itemsData, setItemsData] = useState([]);
+            const [searchTerm, setSearchTerm] = useState('');
+            const [selectedType, setSelectedType] = useState(null);
+            const [selectedPokemon, setSelectedPokemon] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [error, setError] = useState(null);
+
+            useEffect(() => {
+                loadData();
+            }, []);
+
+            // 포켓몬 데이터가 로드된 후 추천 팀 적용
+            useEffect(() => {
+                if (pokemonList.length > 0) {
+                    const recommendedTeam = localStorage.getItem('recommendedTeam');
+                    if (recommendedTeam) {
+                        try {
+                            const teamData = JSON.parse(recommendedTeam);
+                            if (Array.isArray(teamData) && teamData.length > 0) {
+                                // 포켓몬 번호로 실제 포켓몬 데이터 찾기
+                                const loadedTeam = teamData.slice(0, 6).map(pokemonData => {
+                                    if (typeof pokemonData === 'object' && pokemonData.num) {
+                                        // 이미 포켓몬 객체인 경우
+                                        return pokemonData;
+                                    } else if (typeof pokemonData === 'number') {
+                                        // 번호만 있는 경우
+                                        return pokemonList.find(p => p.num === pokemonData);
+                                    }
+                                    return null;
+                                }).filter(Boolean);
+
+                                if (loadedTeam.length > 0) {
+                                    const newTeam = [...team];
+                                    loadedTeam.forEach((pokemon, index) => {
+                                        if (index < 6 && pokemon) {
+                                            newTeam[index] = pokemon;
+                                        }
+                                    });
+                                    setTeam(newTeam);
+                                    // 사용 후 삭제
+                                    localStorage.removeItem('recommendedTeam');
+                                }
+                            }
+                        } catch (e) {
+                            console.warn('추천 팀 로드 실패:', e);
+                        }
+                    }
+                }
+            }, [pokemonList]);
+
+            const loadData = async () => {
+                try {
+                    console.log('데이터 로딩 시작...');
+                    
+                    // Load Pokedex
+                    const pokedexRes = await fetch('data/pokemoem_pokedex.json');
+                    if (!pokedexRes.ok) throw new Error('Pokedex 파일을 찾을 수 없습니다');
+                    const pokedexData = await pokedexRes.json();
+                    console.log('포켓몬 데이터 로딩 완료:', pokedexData.length, '마리');
+                    setPokemonList(pokedexData);
+
+                    // Load Ranking
+                    try {
+                        const rankingRes = await fetch('data/pokemoem_pokemon_ranking_sc.json');
+                        if (!rankingRes.ok) throw new Error('랭킹 파일을 찾을 수 없습니다');
+                        const rankingJson = await rankingRes.json();
+                        setRankingData(rankingJson[0]?.data || []);
+                        console.log('랭킹 데이터 로딩 완료:', rankingJson[0]?.data?.length || 0, '개');
+                    } catch (e) {
+                        console.warn('랭킹 데이터 로딩 실패, 계속 진행합니다:', e);
+                        setRankingData([]);
+                    }
+
+                    // Load Type Chart
+                    try {
+                        const typeRes = await fetch('data/pokemoem_typechart.json');
+                        if (!typeRes.ok) throw new Error('타입 차트 파일을 찾을 수 없습니다');
+                        const typeData = await typeRes.json();
+                        setTypeChart(typeData);
+                        console.log('타입 차트 로딩 완료');
+                    } catch (e) {
+                        console.warn('타입 차트 로딩 실패, 계속 진행합니다:', e);
+                        setTypeChart([]);
+                    }
+
+                    // Load Pokemon Details (for recommended moves and items)
+                    try {
+                        const detailsRes = await fetch('data/pokemoem_pokemon_details_sc.json');
+                        if (!detailsRes.ok) throw new Error('포켓몬 상세 정보 파일을 찾을 수 없습니다');
+                        const detailsJson = await detailsRes.json();
+                        setPokemonDetails(detailsJson[0]?.data || null);
+                        console.log('포켓몬 상세 정보 로딩 완료');
+                    } catch (e) {
+                        console.warn('포켓몬 상세 정보 로딩 실패, 계속 진행합니다:', e);
+                        setPokemonDetails(null);
+                    }
+
+                    // Load Moves
+                    try {
+                        const movesRes = await fetch('data/pokemoem_moves.json');
+                        if (!movesRes.ok) throw new Error('기술 파일을 찾을 수 없습니다');
+                        const movesJson = await movesRes.json();
+                        setMovesData(movesJson);
+                        console.log('기술 데이터 로딩 완료:', movesJson.length, '개');
+                    } catch (e) {
+                        console.warn('기술 데이터 로딩 실패, 계속 진행합니다:', e);
+                        setMovesData([]);
+                    }
+
+                    // Load Items
+                    try {
+                        const itemsRes = await fetch('data/pokemoem_items.json');
+                        if (!itemsRes.ok) throw new Error('도구 파일을 찾을 수 없습니다');
+                        const itemsJson = await itemsRes.json();
+                        setItemsData(itemsJson);
+                        console.log('도구 데이터 로딩 완료:', itemsJson.length, '개');
+                    } catch (e) {
+                        console.warn('도구 데이터 로딩 실패, 계속 진행합니다:', e);
+                        setItemsData([]);
+                    }
+
+                    setLoading(false);
+                } catch (error) {
+                    console.error('데이터 로딩 실패:', error);
+                    setError(error.message);
+                    setLoading(false);
+                }
+            };
+
+            const addToTeam = (pokemon) => {
+                const emptyIndex = team.findIndex(slot => slot === null);
+                if (emptyIndex !== -1) {
+                    const newTeam = [...team];
+                    newTeam[emptyIndex] = pokemon;
+                    setTeam(newTeam);
+                    setSelectedPokemon(null);
+                } else {
+                    alert('팀이 가득 찼습니다!');
+                }
+            };
+
+            const removeFromTeam = (index) => {
+                const newTeam = [...team];
+                newTeam[index] = null;
+                setTeam(newTeam);
+            };
+
+            const getPokemonImageUrl = (num, form = 0) => {
+                // Form이 0이 아니면 특별한 폼
+                if (form && form > 0) {
+                    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${num}.png`;
+                }
+                return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${num}.png`;
+            };
+
+            const filteredPokemon = pokemonList.filter(pokemon => {
+                if (!pokemon) return false;
+                
+                const matchesSearch = pokemon.nameko?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    pokemon.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    pokemon.num?.toString().includes(searchTerm);
+                
+                const matchesType = !selectedType || pokemon.types?.includes(selectedType);
+                
+                return matchesSearch && matchesType;
+            });
+
+            // Get top 30 popular Pokemon
+            const popularPokemon = rankingData && rankingData.length > 0 
+                ? rankingData.slice(0, 30).map(rank => {
+                    return pokemonList.find(p => p.num === rank.id);
+                }).filter(Boolean)
+                : [];
+
+            // 검색이나 필터가 없으면 인기 포켓몬, 있으면 필터된 포켓몬 표시
+            const displayPokemon = (searchTerm || selectedType) ? filteredPokemon.slice(0, 50) : 
+                                   (popularPokemon.length > 0 ? popularPokemon : pokemonList.slice(0, 30));
+
+            if (loading) {
+                return <div className="loading">데이터 로딩 중...</div>;
+            }
+
+            if (error) {
+                return (
+                    <div className="loading">
+                        <h2>⚠️ 데이터 로딩 오류</h2>
+                        <p>{error}</p>
+                        <p style={{marginTop: '20px', fontSize: '16px'}}>
+                            파일명을 확인해주세요:<br/>
+                            - data/pokemoem_pokedex.json<br/>
+                            - data/pokemoem_pokemon_ranking_sc.json<br/>
+                            - data/pokemoem_typechart.json
+                        </p>
+                        <button 
+                            className="back-btn" 
+                            onClick={() => window.location.reload()}
+                            style={{marginTop: '20px'}}
+                        >
+                            다시 시도
+                        </button>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="container">
+                    <div className="header">
+                        <img src="mainbanner.png" alt="PocketChoice" className="logo" />
+                        <button className="back-btn" onClick={() => window.location.href = 'pocketchoice-homepage.html'}>
+                            ← 홈으로 돌아가기
+                        </button>
+                    </div>
+
+                    {/* Team Section */}
+                    <div className="team-section">
+                        <h2>🎮 내 팀 구성 ({team.filter(Boolean).length}/6)</h2>
+                        <div className="team-slots">
+                            {team.map((pokemon, index) => (
+                                <div 
+                                    key={index} 
+                                    className={`team-slot ${pokemon ? 'filled' : ''}`}
+                                >
+                                    {pokemon ? (
+                                        <>
+                                            <img 
+                                                src={getPokemonImageUrl(pokemon.num)} 
+                                                alt={pokemon.nameko || pokemon.name}
+                                                onError={(e) => {
+                                                    e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
+                                                }}
+                                            />
+                                            <span className="pokemon-name">{pokemon.nameko || pokemon.name}</span>
+                                            <button 
+                                                className="remove-btn"
+                                                onClick={() => removeFromTeam(index)}
+                                            >×</button>
+                                        </>
+                                    ) : (
+                                        <span style={{color: '#999', fontSize: '14px'}}>포켓몬 추가</span>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {team.filter(Boolean).length > 0 && (
+                            <div className="team-analysis">
+                                <h3>팀 타입 분석</h3>
+                                <div className="type-coverage">
+                                    {Array.from(new Set(team.filter(Boolean).flatMap(p => p.types || []))).map(type => (
+                                        <span key={type} className={`type-badge ${TYPE_COLORS[type]}`}>
+                                            {TYPE_NAMES_KR[type] || type}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Pokemon Selection Section */}
+                    <div className="pokemon-section">
+                        <h2>🔍 포켓몬 선택</h2>
+                        
+                        <div className="search-filter">
+                            <input 
+                                type="text"
+                                className="search-input"
+                                placeholder="포켓몬 이름 또는 번호로 검색..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="type-filter">
+                            {Object.keys(TYPE_NAMES_KR).map(type => (
+                                <button
+                                    key={type}
+                                    className={`type-filter-btn ${TYPE_COLORS[type]} ${selectedType === type ? 'active' : ''}`}
+                                    onClick={() => setSelectedType(selectedType === type ? null : type)}
+                                    style={selectedType === type ? {} : {background: 'white', color: '#333'}}
+                                >
+                                    {TYPE_NAMES_KR[type]}
+                                </button>
+                            ))}
+                        </div>
+
+                        {!searchTerm && !selectedType && rankingData.length > 0 && (
+                            <p style={{margin: '15px 0', color: '#666'}}>
+                                💡 현재 시즌 인기 포켓몬 TOP 30을 표시하고 있습니다
+                            </p>
+                        )}
+
+                        <div className="pokemon-grid">
+                            {displayPokemon.map(pokemon => (
+                                <div 
+                                    key={`${pokemon.num}-${pokemon.forme || 0}`}
+                                    className="pokemon-card"
+                                    onClick={() => setSelectedPokemon(pokemon)}
+                                >
+                                    <img 
+                                        src={getPokemonImageUrl(pokemon.num)} 
+                                        alt={pokemon.nameko || pokemon.name}
+                                        onError={(e) => {
+                                            e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
+                                        }}
+                                    />
+                                    <div className="name">{pokemon.nameko || pokemon.name}</div>
+                                    <div className="number">No. {pokemon.num}</div>
+                                    <div className="pokemon-types">
+                                        {pokemon.types?.map(type => (
+                                            <span key={type} className={`type-badge ${TYPE_COLORS[type]}`}>
+                                                {TYPE_NAMES_KR[type] || type}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {displayPokemon.length === 0 && (
+                            <p style={{textAlign: 'center', padding: '50px', color: '#999'}}>
+                                검색 결과가 없습니다
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Pokemon Detail Modal */}
+                    {selectedPokemon && (
+                        <PokemonDetailModal 
+                            pokemon={selectedPokemon}
+                            onClose={() => setSelectedPokemon(null)}
+                            onAddToTeam={addToTeam}
+                            getPokemonImageUrl={getPokemonImageUrl}
+                            pokemonDetails={pokemonDetails}
+                            movesData={movesData}
+                            itemsData={itemsData}
+                        />
+                    )}
+                </div>
+            );
+        }
+
+        function PokemonDetailModal({ pokemon, onClose, onAddToTeam, getPokemonImageUrl, pokemonDetails, movesData, itemsData }) {
+            const TYPE_COLORS = {
+                'Normal': 'type-normal', 'Fighting': 'type-fighting', 'Flying': 'type-flying',
+                'Poison': 'type-poison', 'Ground': 'type-ground', 'Rock': 'type-rock',
+                'Bug': 'type-bug', 'Ghost': 'type-ghost', 'Steel': 'type-steel',
+                'Fire': 'type-fire', 'Water': 'type-water', 'Grass': 'type-grass',
+                'Electric': 'type-electric', 'Psychic': 'type-psychic', 'Ice': 'type-ice',
+                'Dragon': 'type-dragon', 'Dark': 'type-dark', 'Fairy': 'type-fairy'
+            };
+
+            const TYPE_NAMES_KR = {
+                'Normal': '노말', 'Fighting': '격투', 'Flying': '비행',
+                'Poison': '독', 'Ground': '땅', 'Rock': '바위',
+                'Bug': '벌레', 'Ghost': '고스트', 'Steel': '강철',
+                'Fire': '불꽃', 'Water': '물', 'Grass': '풀',
+                'Electric': '전기', 'Psychic': '에스퍼', 'Ice': '얼음',
+                'Dragon': '드래곤', 'Dark': '악', 'Fairy': '페어리'
+            };
+
+            const STAT_NAMES = {
+                'hp': 'HP',
+                'atk': '공격',
+                'def': '방어',
+                'spa': '특수공격',
+                'spd': '특수방어',
+                'spe': '스피드'
+            };
+
+            return (
+                <div className="modal" onClick={onClose}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="modal-close" onClick={onClose}>×</button>
+                        
+                        <div className="pokemon-detail">
+                            <img 
+                                src={getPokemonImageUrl(pokemon.num)} 
+                                alt={pokemon.nameko || pokemon.name}
+                                onError={(e) => {
+                                    e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
+                                }}
+                            />
+                            <h2>{pokemon.nameko || pokemon.name}</h2>
+                            <p style={{color: '#999', marginBottom: '10px'}}>No. {pokemon.num}</p>
+                            <div className="pokemon-types">
+                                {pokemon.types?.map(type => (
+                                    <span key={type} className={`type-badge ${TYPE_COLORS[type]}`}>
+                                        {TYPE_NAMES_KR[type] || type}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <div className="stats-section">
+                                <h3>📊 기본 스탯</h3>
+                                {pokemon.basestats && Object.entries(pokemon.basestats).map(([stat, value]) => (
+                                    <div key={stat} className="stat-bar">
+                                        <div className="stat-bar-label">
+                                            <span>{STAT_NAMES[stat] || stat.toUpperCase()}</span>
+                                            <span>{value}</span>
+                                        </div>
+                                        <div style={{background: '#e0e0e0', borderRadius: '10px'}}>
+                                            <div 
+                                                className="stat-bar-fill" 
+                                                style={{width: `${Math.min(value / 255 * 100, 100)}%`}}
+                                            >
+                                                {value}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {pokemon.abilities && (
+                                <div className="moves-section">
+                                    <h3>✨ 특성</h3>
+                                    <div style={{display: 'flex', gap: '10px', flexWrap: 'wrap'}}>
+                                        {Object.entries(pokemon.abilities).map(([key, ability]) => (
+                                            <span key={key} className="move-item">
+                                                {ability} {key === 'H' ? '(숨겨진 특성)' : ''}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            <RecommendedMoves 
+                                pokemon={pokemon}
+                                pokemonDetails={pokemonDetails}
+                                movesData={movesData}
+                            />
+
+                            <RecommendedItems 
+                                pokemon={pokemon}
+                                pokemonDetails={pokemonDetails}
+                                itemsData={itemsData}
+                            />
+
+                            <button className="add-to-team-btn" onClick={() => onAddToTeam(pokemon)}>
+                                팀에 추가하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function RecommendedMoves({ pokemon, pokemonDetails, movesData }) {
+            const TYPE_COLORS = {
+                'Normal': 'type-normal', 'Fighting': 'type-fighting', 'Flying': 'type-flying',
+                'Poison': 'type-poison', 'Ground': 'type-ground', 'Rock': 'type-rock',
+                'Bug': 'type-bug', 'Ghost': 'type-ghost', 'Steel': 'type-steel',
+                'Fire': 'type-fire', 'Water': 'type-water', 'Grass': 'type-grass',
+                'Electric': 'type-electric', 'Psychic': 'type-psychic', 'Ice': 'type-ice',
+                'Dragon': 'type-dragon', 'Dark': 'type-dark', 'Fairy': 'type-fairy'
+            };
+
+            const TYPE_NAMES_KR = {
+                'Normal': '노말', 'Fighting': '격투', 'Flying': '비행',
+                'Poison': '독', 'Ground': '땅', 'Rock': '바위',
+                'Bug': '벌레', 'Ghost': '고스트', 'Steel': '강철',
+                'Fire': '불꽃', 'Water': '물', 'Grass': '풀',
+                'Electric': '전기', 'Psychic': '에스퍼', 'Ice': '얼음',
+                'Dragon': '드래곤', 'Dark': '악', 'Fairy': '페어리'
+            };
+
+            if (!pokemonDetails || !movesData || movesData.length === 0) {
+                return (
+                    <div className="moves-section">
+                        <h3>⚔️ 추천 기술</h3>
+                        <p style={{color: '#666'}}>데이터를 불러올 수 없습니다.</p>
+                    </div>
+                );
+            }
+
+            const pokemonNum = pokemon.num?.toString();
+            const pokemonForm = pokemon.forme || 0;
+            const pokemonData = pokemonDetails[pokemonNum]?.[pokemonForm]?.temoti;
+
+            if (!pokemonData || !pokemonData.waza || pokemonData.waza.length === 0) {
+                return (
+                    <div className="moves-section">
+                        <h3>⚔️ 추천 기술</h3>
+                        <p style={{color: '#666'}}>이 포켓몬의 추천 기술 데이터가 없습니다.</p>
+                    </div>
+                );
+            }
+
+            // 상위 10개 기술만 표시
+            const topMoves = pokemonData.waza.slice(0, 10).map(moveInfo => {
+                const move = movesData.find(m => m.num?.toString() === moveInfo.id.toString());
+                return {
+                    ...moveInfo,
+                    move: move
+                };
+            }).filter(m => m.move); // 기술 정보가 있는 것만
+
+            if (topMoves.length === 0) {
+                return (
+                    <div className="moves-section">
+                        <h3>⚔️ 추천 기술</h3>
+                        <p style={{color: '#666'}}>추천 기술 정보를 찾을 수 없습니다.</p>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="moves-section">
+                    <h3>⚔️ 추천 기술 (사용률 기준)</h3>
+                    <div className="moves-grid">
+                        {topMoves.map((moveInfo, index) => (
+                            <div key={index} className="move-item" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <div>
+                                    <div style={{fontWeight: '700', marginBottom: '3px'}}>
+                                        {moveInfo.move.nameko || moveInfo.move.name}
+                                    </div>
+                                    <div style={{fontSize: '12px', color: '#666'}}>
+                                        {moveInfo.move.type && (
+                                            <span className={`type-badge ${TYPE_COLORS[moveInfo.move.type]}`} style={{fontSize: '10px', padding: '2px 6px'}}>
+                                                {TYPE_NAMES_KR[moveInfo.move.type] || moveInfo.move.type}
+                                            </span>
+                                        )}
+                                        {moveInfo.move.basepower && ` | 위력: ${moveInfo.move.basepower}`}
+                                    </div>
+                                </div>
+                                <div style={{fontSize: '14px', fontWeight: '700', color: '#667eea'}}>
+                                    {parseFloat(moveInfo.val).toFixed(1)}%
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function RecommendedItems({ pokemon, pokemonDetails, itemsData }) {
+            if (!pokemonDetails || !itemsData || itemsData.length === 0) {
+                return (
+                    <div className="items-section">
+                        <h3>🎒 추천 지닌 도구</h3>
+                        <p style={{color: '#666'}}>데이터를 불러올 수 없습니다.</p>
+                    </div>
+                );
+            }
+
+            const pokemonNum = pokemon.num?.toString();
+            const pokemonForm = pokemon.forme || 0;
+            const pokemonData = pokemonDetails[pokemonNum]?.[pokemonForm]?.temoti;
+
+            if (!pokemonData || !pokemonData.motimono || pokemonData.motimono.length === 0) {
+                return (
+                    <div className="items-section">
+                        <h3>🎒 추천 지닌 도구</h3>
+                        <p style={{color: '#666'}}>이 포켓몬의 추천 도구 데이터가 없습니다.</p>
+                    </div>
+                );
+            }
+
+            // 상위 5개 도구만 표시
+            const topItems = pokemonData.motimono.slice(0, 5).map(itemInfo => {
+                const item = itemsData.find(i => i.num?.toString() === itemInfo.id.toString());
+                return {
+                    ...itemInfo,
+                    item: item
+                };
+            }).filter(i => i.item); // 도구 정보가 있는 것만
+
+            if (topItems.length === 0) {
+                return (
+                    <div className="items-section">
+                        <h3>🎒 추천 지닌 도구</h3>
+                        <p style={{color: '#666'}}>추천 도구 정보를 찾을 수 없습니다.</p>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="items-section">
+                    <h3>🎒 추천 지닌 도구 (사용률 기준)</h3>
+                    <div className="items-grid">
+                        {topItems.map((itemInfo, index) => (
+                            <div key={index} className="item-item" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                <div>
+                                    <div style={{fontWeight: '700', marginBottom: '3px'}}>
+                                        {itemInfo.item.nameko || itemInfo.item.name}
+                                    </div>
+                                    {itemInfo.item.desc && (
+                                        <div style={{fontSize: '11px', color: '#666', lineHeight: '1.3'}}>
+                                            {itemInfo.item.desc.length > 50 
+                                                ? itemInfo.item.desc.substring(0, 50) + '...'
+                                                : itemInfo.item.desc}
+                                        </div>
+                                    )}
+                                </div>
+                                <div style={{fontSize: '14px', fontWeight: '700', color: '#667eea', marginLeft: '10px'}}>
+                                    {parseFloat(itemInfo.val).toFixed(1)}%
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<TeamBuilder />, document.getElementById('root'));
+    </script>
+</body>
+</html>

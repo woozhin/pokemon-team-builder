@@ -1,0 +1,375 @@
+[{
+  "_id": {
+    "$oid": "63188e592a131035f76dd668"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 0.9,
+  "d": 1.1,
+  "index": "careful",
+  "name": "Careful",
+  "namejp": "しんちょう",
+  "nameko": "신중",
+  "num": 23,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd658"
+  },
+  "a": 1,
+  "b": 1.1,
+  "c": 1,
+  "d": 1,
+  "index": "relaxed",
+  "name": "Relaxed",
+  "namejp": "のんき",
+  "nameko": "무사태평",
+  "num": 7,
+  "s": 0.9
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd661"
+  },
+  "a": 1,
+  "b": 0.9,
+  "c": 1.1,
+  "d": 1,
+  "index": "mild",
+  "name": "Mild",
+  "namejp": "おっとり",
+  "nameko": "의젓",
+  "num": 16,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd665"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1,
+  "d": 1,
+  "index": "bashful",
+  "name": "Bashful",
+  "namejp": "てれや",
+  "nameko": "수줍음",
+  "num": 18,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd657"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1,
+  "d": 1,
+  "index": "docile",
+  "name": "Docile",
+  "namejp": "すなお",
+  "nameko": "온순",
+  "num": 6,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd660"
+  },
+  "a": 0.9,
+  "b": 1,
+  "c": 1.1,
+  "d": 1,
+  "index": "modest",
+  "name": "Modest",
+  "namejp": "ひかえめ",
+  "nameko": "조심",
+  "num": 15,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd65f"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1,
+  "d": 0.9,
+  "index": "naive",
+  "name": "Naive",
+  "namejp": "むじゃき",
+  "nameko": "천진난만",
+  "num": 14,
+  "s": 1.1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd652"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1,
+  "d": 1,
+  "index": "hardy",
+  "name": "Hardy",
+  "namejp": "がんばりや",
+  "nameko": "노력",
+  "num": 0,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd654"
+  },
+  "a": 1.1,
+  "b": 1,
+  "c": 1,
+  "d": 1,
+  "index": "brave",
+  "name": "Brave",
+  "namejp": "ゆうかん",
+  "nameko": "용감",
+  "num": 2,
+  "s": 0.9
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd659"
+  },
+  "a": 1,
+  "b": 1.1,
+  "c": 0.9,
+  "d": 1,
+  "index": "impish",
+  "name": "Impish",
+  "namejp": "わんぱく",
+  "nameko": "장난꾸러기",
+  "num": 8,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd65b"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1,
+  "d": 1,
+  "index": "serious",
+  "name": "Serious",
+  "namejp": "まじめ",
+  "nameko": "성실",
+  "num": 12,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd663"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1.1,
+  "d": 1,
+  "index": "quiet",
+  "name": "Quiet",
+  "namejp": "れいせい",
+  "nameko": "냉정",
+  "num": 17,
+  "s": 0.9
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd666"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1.1,
+  "d": 0.9,
+  "index": "rash",
+  "name": "Rash",
+  "namejp": "うっかりや",
+  "nameko": "덜렁",
+  "num": 19,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd662"
+  },
+  "a": 1,
+  "b": 0.9,
+  "c": 1,
+  "d": 1,
+  "index": "hasty",
+  "name": "Hasty",
+  "namejp": "せっかち",
+  "nameko": "성급",
+  "num": 11,
+  "s": 1.1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd667"
+  },
+  "a": 0.9,
+  "b": 1,
+  "c": 1,
+  "d": 1.1,
+  "index": "calm",
+  "name": "Calm",
+  "namejp": "おだやか",
+  "nameko": "차분",
+  "num": 20,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd669"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1,
+  "d": 1.1,
+  "index": "sassy",
+  "name": "Sassy",
+  "namejp": "なまいき",
+  "nameko": "건방",
+  "num": 22,
+  "s": 0.9
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd656"
+  },
+  "a": 0.9,
+  "b": 1.1,
+  "c": 1,
+  "d": 1,
+  "index": "bold",
+  "name": "Bold",
+  "namejp": "ずぶとい",
+  "nameko": "대담",
+  "num": 5,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd65e"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 0.9,
+  "d": 1,
+  "index": "jolly",
+  "name": "Jolly",
+  "namejp": "ようき",
+  "nameko": "명랑",
+  "num": 13,
+  "s": 1.1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd664"
+  },
+  "a": 1,
+  "b": 0.9,
+  "c": 1,
+  "d": 1.1,
+  "index": "gentle",
+  "name": "Gentle",
+  "namejp": "おとなしい",
+  "nameko": "얌전",
+  "num": 21,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd66a"
+  },
+  "a": 1,
+  "b": 1,
+  "c": 1,
+  "d": 1,
+  "index": "quirky",
+  "name": "Quirky",
+  "namejp": "きまぐれ",
+  "nameko": "변덕",
+  "num": 24,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd65d"
+  },
+  "a": 1,
+  "b": 1.1,
+  "c": 1,
+  "d": 0.9,
+  "index": "lax",
+  "name": "Lax",
+  "namejp": "のうてんき",
+  "nameko": "촐랑",
+  "num": 9,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd653"
+  },
+  "a": 1.1,
+  "b": 1,
+  "c": 0.9,
+  "d": 1,
+  "index": "adamant",
+  "name": "Adamant",
+  "namejp": "いじっぱり",
+  "nameko": "고집",
+  "num": 3,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd65a"
+  },
+  "a": 1.1,
+  "b": 0.9,
+  "c": 1,
+  "d": 1,
+  "index": "lonely",
+  "name": "Lonely",
+  "namejp": "さみしがり",
+  "nameko": "외로움",
+  "num": 1,
+  "s": 1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd65c"
+  },
+  "a": 0.9,
+  "b": 1,
+  "c": 1,
+  "d": 1,
+  "index": "timid",
+  "name": "Timid",
+  "namejp": "おくびょう",
+  "nameko": "겁쟁이",
+  "num": 10,
+  "s": 1.1
+},
+{
+  "_id": {
+    "$oid": "63188e592a131035f76dd655"
+  },
+  "a": 1.1,
+  "b": 1,
+  "c": 1,
+  "d": 0.9,
+  "index": "naughty",
+  "name": "Naughty",
+  "namejp": "やんちゃ",
+  "nameko": "개구쟁이",
+  "num": 4,
+  "s": 1
+}]
