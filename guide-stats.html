@@ -142,26 +142,46 @@
         }
         
         .guide-section h2 {
-            font-size: 32px;
+            font-size: 36px;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             gap: 15px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
         }
         
         .guide-section h2 .icon {
-            font-size: 40px;
+            font-size: 45px;
         }
         
         .guide-content {
             line-height: 1.8;
             color: #555;
-            font-size: 16px;
+            font-size: 18px;
         }
         
         .guide-content p {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .guide-content p strong {
+            color: #333;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .intro-text {
+            font-size: 20px;
+            line-height: 2;
+            color: #444;
+            margin-bottom: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
         }
         
         .guide-image {
@@ -173,17 +193,34 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
+        /* 작은 아이콘 이미지 (선택적 사용) */
+        .guide-icon-image {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: block;
+            border-radius: 10px;
+            opacity: 0.7;
+        }
+        
         .highlight-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px;
+            padding: 30px;
             border-radius: 15px;
-            margin: 20px 0;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
         }
         
         .highlight-box h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .highlight-box li {
+            font-size: 17px;
+            line-height: 1.8;
         }
         
         .highlight-box ul {
@@ -206,16 +243,23 @@
         
         .stat-example {
             background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-left: 4px solid #667eea;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
         
         .stat-example h4 {
             color: #333;
-            margin-bottom: 10px;
-            font-size: 18px;
+            margin-bottom: 15px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .stat-example p {
+            font-size: 17px;
+            margin-bottom: 12px;
         }
         
         .stat-table {
@@ -295,7 +339,48 @@
             }
             
             .guide-section h2 {
-                font-size: 24px;
+                font-size: 28px;
+            }
+            
+            .guide-section h2 .icon {
+                font-size: 35px;
+            }
+            
+            .guide-content {
+                font-size: 16px;
+            }
+            
+            .intro-text {
+                font-size: 18px;
+                padding: 20px;
+            }
+            
+            .guide-content p {
+                font-size: 16px;
+            }
+            
+            .guide-content p strong {
+                font-size: 18px;
+            }
+            
+            .highlight-box {
+                padding: 20px;
+            }
+            
+            .highlight-box h3 {
+                font-size: 20px;
+            }
+            
+            .highlight-box li {
+                font-size: 15px;
+            }
+            
+            .stat-example {
+                padding: 20px;
+            }
+            
+            .stat-example h4 {
+                font-size: 20px;
             }
             
             .nature-grid {
@@ -326,12 +411,10 @@
         <div class="guide-section">
             <h2><span class="icon">📊</span>종족값 (Base Stats)</h2>
             <div class="guide-content">
-                <p>
+                <div class="intro-text">
                     <strong>종족값</strong>은 포켓몬 종족마다 정해진 고유한 기본 능력치입니다. 
                     같은 종족의 포켓몬이라면 모두 동일한 종족값을 가지며, 레벨업이나 훈련으로 변경할 수 없습니다.
-                </p>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" 
-                     alt="피카츄" class="guide-image">
+                </div>
                 <p>
                     종족값은 HP, 공격, 방어, 특수공격, 특수방어, 스피드 총 6가지 능력치로 구성되어 있으며, 
                     각 능력치의 합이 높을수록 강한 포켓몬이라고 할 수 있습니다.
@@ -362,12 +445,10 @@
         <div class="guide-section">
             <h2><span class="icon">⭐</span>개체값 (IVs - Individual Values)</h2>
             <div class="guide-content">
-                <p>
+                <div class="intro-text">
                     <strong>개체값</strong>은 같은 종족의 포켓몬이라도 개체마다 다르게 부여되는 숨겨진 능력치입니다. 
                     포켓몬을 잡을 때부터 결정되며, 이후 변경할 수 없습니다.
-                </p>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" 
-                     alt="리자몽" class="guide-image">
+                </div>
                 <p>
                     개체값은 각 능력치마다 0~31 사이의 값을 가지며, 31이 최고값입니다. 
                     같은 레벨, 같은 종족값의 포켓몬이라도 개체값이 높을수록 더 강해집니다.
@@ -388,12 +469,10 @@
         <div class="guide-section">
             <h2><span class="icon">💪</span>노력치 (EVs - Effort Values)</h2>
             <div class="guide-content">
-                <p>
+                <div class="intro-text">
                     <strong>노력치</strong>는 포켓몬이 배틀에서 승리하거나 특정 포켓몬을 쓰러뜨릴 때 얻는 훈련 포인트입니다. 
                     이 포인트를 원하는 능력치에 투자하여 포켓몬을 강화할 수 있습니다.
-                </p>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png" 
-                     alt="잠만보" class="guide-image">
+                </div>
                 <p>
                     노력치는 총 510포인트까지 투자할 수 있으며, 각 능력치마다 최대 252포인트까지 투자 가능합니다. 
                     보통은 2개의 능력치에 252씩 투자하고, 나머지 6포인트를 다른 능력치에 투자하는 것이 일반적입니다.
@@ -420,12 +499,10 @@
         <div class="guide-section">
             <h2><span class="icon">🎭</span>성격 (Nature)</h2>
             <div class="guide-content">
-                <p>
+                <div class="intro-text">
                     <strong>성격</strong>은 포켓몬의 성격에 따라 특정 능력치가 올라가거나 내려가는 시스템입니다. 
                     총 25가지 성격이 있으며, 각 성격은 하나의 능력치를 10% 올리고 다른 하나를 10% 내립니다.
-                </p>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png" 
-                     alt="팬텀" class="guide-image">
+                </div>
                 <p>
                     성격은 포켓몬을 잡을 때 랜덤하게 결정되며, 성격 변경 아이템을 사용하여 바꿀 수 있습니다. 
                     배틀에서는 보통 올리고 싶은 능력치를 올리고, 사용하지 않는 능력치를 내리는 성격을 선택합니다.
@@ -512,36 +589,37 @@
         <div class="guide-section">
             <h2><span class="icon">🎯</span>종합 정리</h2>
             <div class="guide-content">
-                <p>
+                <div class="intro-text">
                     포켓몬의 최종 능력치는 <strong>종족값 + 개체값 + 노력치 + 성격</strong>의 영향을 받습니다.
-                </p>
+                    이 네 가지 요소를 모두 이해하고 활용하면 강력한 포켓몬을 만들 수 있습니다.
+                </div>
                 <div class="highlight-box">
                     <h3>📝 능력치 계산 공식</h3>
-                    <p style="margin-top: 10px;">
+                    <p style="margin-top: 15px; font-size: 20px; line-height: 1.8;">
                         <strong>최종 능력치 = (종족값 × 2 + 개체값 + 노력치 ÷ 4) × 레벨 ÷ 100 + 레벨 + 10</strong>
                     </p>
-                    <p style="margin-top: 15px; font-size: 14px;">
+                    <p style="margin-top: 20px; font-size: 17px; line-height: 1.8;">
                         성격이 올리는 능력치는 ×1.1, 내리는 능력치는 ×0.9를 곱합니다.
                     </p>
                 </div>
                 <div class="stat-example">
                     <h4>강한 포켓몬 만들기 체크리스트</h4>
-                    <ul style="list-style: none; padding-left: 0;">
-                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
-                            <span style="position: absolute; left: 0;">✓</span>
-                            <strong>종족값:</strong> 원하는 능력치가 높은 포켓몬 선택
+                    <ul style="list-style: none; padding-left: 0; margin-top: 15px;">
+                        <li style="padding: 15px 0; padding-left: 35px; position: relative; font-size: 18px; line-height: 1.8;">
+                            <span style="position: absolute; left: 0; font-size: 24px; color: #667eea;">✓</span>
+                            <strong style="color: #333; font-size: 20px;">종족값:</strong> 원하는 능력치가 높은 포켓몬 선택
                         </li>
-                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
-                            <span style="position: absolute; left: 0;">✓</span>
-                            <strong>개체값:</strong> 최고 개체값(31) 또는 필요한 능력치만 최고값
+                        <li style="padding: 15px 0; padding-left: 35px; position: relative; font-size: 18px; line-height: 1.8;">
+                            <span style="position: absolute; left: 0; font-size: 24px; color: #667eea;">✓</span>
+                            <strong style="color: #333; font-size: 20px;">개체값:</strong> 최고 개체값(31) 또는 필요한 능력치만 최고값
                         </li>
-                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
-                            <span style="position: absolute; left: 0;">✓</span>
-                            <strong>노력치:</strong> 전략에 맞게 510포인트 분배 (보통 252+252+6)
+                        <li style="padding: 15px 0; padding-left: 35px; position: relative; font-size: 18px; line-height: 1.8;">
+                            <span style="position: absolute; left: 0; font-size: 24px; color: #667eea;">✓</span>
+                            <strong style="color: #333; font-size: 20px;">노력치:</strong> 전략에 맞게 510포인트 분배 (보통 252+252+6)
                         </li>
-                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
-                            <span style="position: absolute; left: 0;">✓</span>
-                            <strong>성격:</strong> 올리고 싶은 능력치↑, 사용 안 하는 능력치↓
+                        <li style="padding: 15px 0; padding-left: 35px; position: relative; font-size: 18px; line-height: 1.8;">
+                            <span style="position: absolute; left: 0; font-size: 24px; color: #667eea;">✓</span>
+                            <strong style="color: #333; font-size: 20px;">성격:</strong> 올리고 싶은 능력치↑, 사용 안 하는 능력치↓
                         </li>
                     </ul>
                 </div>

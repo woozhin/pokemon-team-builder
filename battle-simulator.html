@@ -1049,8 +1049,8 @@
                                 >
                                     {pokemon ? (
                                         <>
-                                            <img src={getPokemonImageUrl(pokemon)} alt={pokemon.nameko || pokemon.name} />
-                                            <div className="name">{pokemon.nameko || pokemon.name}</div>
+                                            <img src={getPokemonImageUrl(pokemon)} alt={pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`} />
+                                            <div className="name">{pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`}</div>
                                             <button 
                                                 className="remove-btn"
                                                 onClick={(e) => {
@@ -1084,8 +1084,8 @@
                                 >
                                     {pokemon ? (
                                         <>
-                                            <img src={getPokemonImageUrl(pokemon)} alt={pokemon.nameko || pokemon.name} />
-                                            <div className="name">{pokemon.nameko || pokemon.name}</div>
+                                            <img src={getPokemonImageUrl(pokemon)} alt={pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`} />
+                                            <div className="name">{pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`}</div>
                                             <button 
                                                 className="remove-btn"
                                                 onClick={(e) => {
@@ -1131,8 +1131,8 @@
                             <div className="recommended-pokemon">
                                 {recommendedPokemon.map((pokemon, index) => (
                                     <div key={index} className="recommended-card">
-                                        <img src={getPokemonImageUrl(pokemon)} alt={pokemon.nameko || pokemon.name} />
-                                        <h3 style={{marginBottom: '10px'}}>{pokemon.nameko || pokemon.name}</h3>
+                                        <img src={getPokemonImageUrl(pokemon)} alt={pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`} />
+                                        <h3 style={{marginBottom: '10px'}}>{pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`}</h3>
                                         <div>
                                             {pokemon.types?.map(type => (
                                                 <span key={type} className={`type-badge ${TYPE_COLORS[type]}`}>
@@ -1282,7 +1282,7 @@
                                                                 <img 
                                                                     key={idx}
                                                                     src={getPokemonImageUrl(pokemon)} 
-                                                                    alt={pokemon.nameko || pokemon.name}
+                                                                    alt={pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`}
                                                                     onError={(e) => {
                                                                         e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
                                                                     }}
@@ -1551,14 +1551,14 @@
                                             <>
                                                 <img 
                                                     src={getPokemonImageUrl(pokemon)}
-                                                    alt={pokemon.nameko || pokemon.name}
+                                                    alt={pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`}
                                                     style={{width: '80px', height: '80px', objectFit: 'contain', marginBottom: '10px'}}
                                                     onError={(e) => {
                                                         e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
                                                     }}
                                                 />
                                                 <div style={{fontWeight: '700', fontSize: '14px', marginBottom: '5px'}}>
-                                                    {pokemon.nameko || pokemon.name}
+                                                    {pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`}
                                                 </div>
                                                 <button
                                                     onClick={() => removeFromSlot(index)}
@@ -1631,13 +1631,13 @@
                                         )}
                                         <img 
                                             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.num}.png`}
-                                            alt={pokemon.nameko || pokemon.name}
+                                            alt={pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`}
                                             onError={(e) => {
                                                 e.target.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.num}.png`;
                                             }}
                                         />
                                         <div style={{fontWeight: '700', marginTop: '10px'}}>
-                                            {pokemon.nameko || pokemon.name}
+                                            {pokemon.nameko || pokemon.name || `포켓몬 #${pokemon.num}`}
                                         </div>
                                         <div style={{fontSize: '12px', color: '#999'}}>No. {pokemon.num}</div>
                                     </div>

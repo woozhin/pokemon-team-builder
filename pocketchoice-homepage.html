@@ -118,6 +118,9 @@
             margin-bottom: 40px;
             position: relative;
             overflow: hidden;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .hero::before {
@@ -139,6 +142,12 @@
         .hero-content {
             position: relative;
             z-index: 1;
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .hero h2 {
@@ -161,7 +170,15 @@
             display: flex;
             gap: 30px;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            left: 0;
+            right: 0;
         }
         
         .btn {
@@ -237,6 +254,7 @@
             top: 50%;
             transform: translateY(-50%);
             animation-delay: 0s;
+            z-index: 1;
         }
         
         .pokemon-right {
@@ -244,6 +262,31 @@
             top: 50%;
             transform: translateY(-50%);
             animation-delay: 1.5s;
+            z-index: 1;
+        }
+        
+        @media (min-width: 1920px) {
+            .pokemon-left {
+                left: 5%;
+            }
+            
+            .pokemon-right {
+                right: 5%;
+            }
+        }
+        
+        @media (min-width: 2560px) {
+            .pokemon-left {
+                left: 8%;
+            }
+            
+            .pokemon-right {
+                right: 8%;
+            }
+            
+            .hero {
+                max-width: 1400px;
+            }
         }
         
         .pokemon-decoration img {
@@ -337,6 +380,81 @@
             
             .button-group {
                 gap: 15px;
+                width: 100%;
+                justify-content: center;
+                margin: 0 auto;
+            }
+        }
+        
+        /* Ensure buttons are centered at all screen sizes */
+        @media (min-width: 769px) and (max-width: 1919px) {
+            .button-group {
+                width: 100%;
+                max-width: 100%;
+                justify-content: center;
+                margin: 0 auto;
+            }
+        }
+        
+        /* Large screens (Full HD and above) */
+        @media (min-width: 1920px) and (max-width: 2559px) {
+            .hero {
+                max-width: 1200px;
+                margin: 0 auto 40px;
+            }
+            
+            .button-group {
+                width: 100%;
+                max-width: 100%;
+                justify-content: center;
+                margin: 0 auto;
+            }
+        }
+        
+        /* QHD and above */
+        @media (min-width: 2560px) {
+            .container {
+                max-width: 1600px;
+            }
+            
+            .hero {
+                max-width: 1400px;
+                padding: 100px 60px;
+            }
+            
+            .hero h2 {
+                font-size: 56px;
+            }
+            
+            .hero p {
+                font-size: 28px;
+            }
+            
+            .button-group {
+                width: 100%;
+                max-width: 100%;
+                justify-content: center;
+                gap: 40px;
+                margin: 0 auto;
+            }
+            
+            .btn {
+                padding: 25px 60px;
+                font-size: 22px;
+            }
+        }
+        
+        /* Extra large screens */
+        @media (min-width: 3840px) {
+            .hero {
+                max-width: 1800px;
+            }
+            
+            .button-group {
+                width: 100%;
+                max-width: 100%;
+                justify-content: center;
+                margin: 0 auto;
             }
         }
         
